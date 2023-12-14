@@ -1,8 +1,12 @@
-import CoreConcept from "./components/core-concept/CoreConcept";
+import { CoreConcept, ICoreConcept } from "./components/core-concept/CoreConcept";
 import Header from "./components/header/Header";
 import compImg from '@/assets/components.png';
+import { CORE_CONCEPTS } from "./data/data";
 
 function App() {
+
+  const c : ICoreConcept = CORE_CONCEPTS[0];
+
   return (
     <div>
       <Header />
@@ -13,7 +17,8 @@ function App() {
             <CoreConcept 
               title="Components" 
               description="The core UI building block." 
-              img={compImg} />
+              image={compImg} />
+            <CoreConcept {...c} />
           </ul>
         </section>
         <h2>Time to get started!</h2>

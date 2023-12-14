@@ -2,14 +2,14 @@
 export interface ICoreConcept {
     title: string,
     description: string,
-    img: string
+    image: string
 }
 
 
-export default function CoreConcept(props : ICoreConcept) {
+export function CoreConcept(props : ICoreConcept) {
     return (
         <li>
-            <img src={props.img} alt={props.title} />
+            <img src={props.image} alt={props.title} />
             <h3>{props.title}</h3>
             <p>{props.description}</p>
         </li>
