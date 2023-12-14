@@ -1,6 +1,7 @@
 import atomImg from '@/assets/react-core-concepts.png';
+import styles from './Header.module.scss';
 
-export default function Header() {
+export function Header() {
 
     const reactDescriptions = ['Fundamental', 'Crucial', 'Core'];
 
@@ -13,7 +14,7 @@ export default function Header() {
     };
 
     return (
-        <header>
+        <header className={styles.header}>
             <img src={atomImg} alt="Stylized atom" />
             <h1>React Essentials</h1>
             <p>

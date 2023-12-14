@@ -2,7 +2,7 @@ import componentsImg from '@/assets/components.png';
 import propsImg from '@/assets/config.png';
 import jsxImg from '@/assets/jsx-ui.png';
 import stateImg from '@/assets/state-mgmt.png';
-import { ICoreConcept } from '@/components/core-concept/CoreConcept';
+import { ICoreConcept } from '@/components/CoreConcept/CoreConcept';
 
 export const CORE_CONCEPTS : ICoreConcept[] = [
   {
@@ -29,4 +29,15 @@ export const CORE_CONCEPTS : ICoreConcept[] = [
     description:
       'React-managed data which, when changed, causes the component to re-render & the UI to update.',
   },
+];
+
+export interface ITabSection {
+  title: string,
+}
+
+export const TAB_SECTIONS : ITabSection[] = [
+  { title: "Components" },
+  { title: "JSX" },
+  { title: "Props" },
+  { title: "State" },
 ];

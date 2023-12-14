@@ -1,11 +1,17 @@
-import { CoreConcept, ICoreConcept } from "./components/core-concept/CoreConcept";
-import Header from "./components/header/Header";
-import compImg from '@/assets/components.png';
-import { CORE_CONCEPTS } from "./data/data";
+import {
+  CoreConcept,
+  ICoreConcept,
+} from "./components/CoreConcept/CoreConcept";
+import { Header } from "./components/Header/Header";
+import compImg from "@/assets/components.png";
+import { CORE_CONCEPTS, ITabSection, TAB_SECTIONS } from "./data/data";
+import { TabButton } from "./components/TabButton/TabButton";
 
-function App() {
+export function App() {
 
-  const c : ICoreConcept = CORE_CONCEPTS[0];
+  const handleTabSelect = function() {
+    console.log("test2");
+  }
 
   return (
     <div>
@@ -14,17 +20,25 @@ function App() {
         <section id="core-concepts">
           <h2>Core Concepts</h2>
           <ul>
-            <CoreConcept 
-              title="Components" 
-              description="The core UI building block." 
-              image={compImg} />
-            <CoreConcept {...c} />
+            <CoreConcept
+              title="Components"
+              description="The core UI building block."
+              image={compImg}
+            />
+            {CORE_CONCEPTS.map((c : ICoreConcept) =>
+              <CoreConcept {...c} />
+            )}
           </ul>
         </section>
-        <h2>Time to get started!</h2>
+        <section id="examples">
+          <h2>Examples</h2>
+          <menu>
+            {TAB_SECTIONS.map((tab : ITabSection) =>
+              <TabButton onSelect={handleTabSelect} >{tab.title}</TabButton>
+            )}
+          </menu>
+        </section>
       </main>
     </div>
   );
 }
-
-export default App;
