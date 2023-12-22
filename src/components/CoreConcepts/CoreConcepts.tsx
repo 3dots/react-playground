@@ -1,11 +1,11 @@
 import { CORE_CONCEPTS, CoreConceptVM } from "@/data/data";
 import { CoreConcept } from "@/components/CoreConcept/CoreConcept";
 import compImg from "@/assets/components.png";
+import { Section } from "../Section/Section";
 
 export function CoreConcepts() {
   return (
-    <section id="core-concepts">
-      <h2>Core Concepts</h2>
+    <Section title="Core Concepts" id="core-concepts">
       <ul>
         <CoreConcept
           title="Components"
@@ -16,6 +16,6 @@ export function CoreConcepts() {
           <CoreConcept {...c} key={c.key} />
         ))}
       </ul>
-    </section>
+    </Section>
   );
 }
