@@ -2,7 +2,8 @@ import { useState } from "react";
 
 export interface IPlayerProps {
   name: string,
-  symbol: string
+  symbol: string,
+  isActive: boolean
 }
 
 export function Player(props: IPlayerProps) {
@@ -18,7 +19,7 @@ export function Player(props: IPlayerProps) {
   }
 
   return (
-    <li>
+    <li className={props.isActive ? "active" : ""}>
       <span className="player">
         {isEdit &&
           <input type="text" required value={name} onChange={handleChange} />
