@@ -50,83 +50,37 @@ export class GameBoardData {
         }
         winCompute.reset();
 
-        //diagonal left to right, first row
+        //diagonal left to right
         let rowStartingIndex = 0;
-        for(let columnStartingIndex = 0; columnStartingIndex < BOARD_DIMENSION_COLUMNS; columnStartingIndex++) {
-            let offset = 0;
-            let rowIndex = rowStartingIndex + offset;
-            let columnIndex = columnStartingIndex + offset;
+        let columnStartingIndex = 0;
 
-            while (rowIndex >= 0 && rowIndex < BOARD_DIMENSION_ROWS && columnIndex >= 0 && columnIndex < BOARD_DIMENSION_COLUMNS) {
-                winCompute.iterate(this.rows[rowIndex].columns[columnIndex]);
-                if (winCompute.isWin()) return true;
+        let offset = 0;
+        let rowIndex = rowStartingIndex;
+        let columnIndex = columnStartingIndex;
+        while (rowIndex >= 0 && rowIndex < BOARD_DIMENSION_ROWS && columnIndex >= 0 && columnIndex < BOARD_DIMENSION_COLUMNS) {
+            winCompute.iterate(this.rows[rowIndex].columns[columnIndex]);
+            if (winCompute.isWin()) return true;
 
-                offset++;
-                rowIndex = rowStartingIndex + offset;
-                columnIndex = columnStartingIndex + offset;
-            }
-
-            winCompute.reset();
+            offset++;
+            rowIndex = rowStartingIndex + offset;
+            columnIndex = columnStartingIndex + offset;
         }
         winCompute.reset();
 
-        //diagonal left to right, first column
-        let columnStartingIndex = 1
-        for(let rowStartingIndex = 1; rowStartingIndex < BOARD_DIMENSION_ROWS; rowStartingIndex++) {
-            let offset = 0;
-            let rowIndex = rowStartingIndex + offset;
-            let columnIndex = columnStartingIndex + offset;
-
-            while (rowIndex >= 0 && rowIndex < BOARD_DIMENSION_ROWS && columnIndex >= 0 && columnIndex < BOARD_DIMENSION_COLUMNS) {
-                winCompute.iterate(this.rows[rowIndex].columns[columnIndex]);
-                if (winCompute.isWin()) return true;
-
-                offset++;
-                rowIndex = rowStartingIndex + offset;
-                columnIndex = columnStartingIndex + offset;
-            }
-
-            winCompute.reset();
-        }
-        winCompute.reset();
-
-        //diagonal right to left, first row
+        //diagonal right to left
         rowStartingIndex = 0;
-        for(let columnStartingIndex = 0; columnStartingIndex < BOARD_DIMENSION_COLUMNS; columnStartingIndex++) {
-            let offset = 0;
-            let rowIndex = rowStartingIndex + offset;
-            let columnIndex = columnStartingIndex - offset;
+        columnStartingIndex = BOARD_DIMENSION_COLUMNS - 1;
 
-            while (rowIndex >= 0 && rowIndex < BOARD_DIMENSION_ROWS && columnIndex >= 0 && columnIndex < BOARD_DIMENSION_COLUMNS) {
-                winCompute.iterate(this.rows[rowIndex].columns[columnIndex]);
-                if (winCompute.isWin()) return true;
+        offset = 0;
+        rowIndex = rowStartingIndex;
+        columnIndex = columnStartingIndex;
+        while (rowIndex >= 0 && rowIndex < BOARD_DIMENSION_ROWS && columnIndex >= 0 && columnIndex < BOARD_DIMENSION_COLUMNS) {
+            winCompute.iterate(this.rows[rowIndex].columns[columnIndex]);
+            if (winCompute.isWin()) return true;
 
-                offset++;
-                rowIndex = rowStartingIndex + offset;
-                columnIndex = columnStartingIndex - offset;
-            }
-
-            winCompute.reset();
-        }
-        winCompute.reset();
-
-        //diagonal left to right, first column
-        columnStartingIndex = 1
-        for(let rowStartingIndex = 1; rowStartingIndex < BOARD_DIMENSION_ROWS; rowStartingIndex++) {
-            let offset = 0;
-            let rowIndex = rowStartingIndex + offset;
-            let columnIndex = columnStartingIndex - offset;
-
-            while (rowIndex >= 0 && rowIndex < BOARD_DIMENSION_ROWS && columnIndex >= 0 && columnIndex < BOARD_DIMENSION_COLUMNS) {
-                winCompute.iterate(this.rows[rowIndex].columns[columnIndex]);
-                if (winCompute.isWin()) return true;
-
-                offset++;
-                rowIndex = rowStartingIndex + offset;
-                columnIndex = columnStartingIndex - offset;
-            }
-
-            winCompute.reset();
+            offset++;
+            rowIndex = rowStartingIndex + offset;
+            columnIndex = columnStartingIndex - offset;
         }
         winCompute.reset();
 
