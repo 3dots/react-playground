@@ -25,6 +25,15 @@ export class GameBoardData {
     this.player2Name = player2Name ?? "Player 2";
   }
 
+  public rematch() : GameBoardData {
+    return new GameBoardData(
+      undefined,
+      undefined,
+      undefined,
+      this.player1Name,
+      this.player2Name);
+  }
+
   private setRows(rows?: GameBoardDataLine[]): GameBoardDataLine[] {
     if (rows && rows.length !== BOARD_DIMENSION_ROWS)
       throw new Error(`Expected ${BOARD_DIMENSION_ROWS} elements in array.`);

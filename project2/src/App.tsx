@@ -53,7 +53,7 @@ export function App() {
   };
 
   const handleRematch = () => {
-    setData(new GameBoardData());
+    setData((curData) => curData.rematch());
   };
 
   const handleSetName = (name: string, player: EnTicToeState) => {
