@@ -12,13 +12,13 @@ body {
   background: radial-gradient(#303b37, #1a1f1d);
   color: #e1eeeb;
   min-height: 100vh;
+  display: block;
 }
 
 #header {
   text-align: center;
   margin: 3rem auto;
 }
-
 
 #header img {
   width: 5rem;
