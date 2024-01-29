@@ -10,7 +10,7 @@ export function GameBoard(props: IGameBoardProps) {
   return (
     <ol id="game-board">
       {props.data.rows.map((row: GameBoardDataLine, index: number) =>
-        <li key={index}><GameBoardLine columns={row.columns} rowIndex={index} onSelectSquare={props.onSelectSquare} isGameOver={props.data.isGameOver} /></li>
+        <li key={index}><GameBoardLine columns={row.columns} rowIndex={index} onSelectSquare={props.onSelectSquare} isGameOver={props.data.winner !== null} /></li>
       )}
     </ol>
   );

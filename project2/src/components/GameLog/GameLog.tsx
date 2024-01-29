@@ -1,14 +1,14 @@
-import { GameLogEntry, playerString } from "../GameBoard/GameBoardData";
+import { GameBoardData, GameLogEntry } from "../GameBoard/GameBoardData";
 
 export interface IGameLogProps {
-  turns: GameLogEntry[]
+  data: GameBoardData
 }
 
 export function GameLog(props: IGameLogProps) {
   return (
     <ol id="log">
-      {props.turns.map((entry: GameLogEntry) =>
-        <li key={`${entry.row}-${entry.column}`}>{playerString(entry.player)} Row: {entry.row} Column: {entry.column}</li>
+      {props.data.logEntries.map((entry: GameLogEntry) =>
+        <li key={`${entry.row}-${entry.column}`}>{props.data.playerString(entry.player)} Row: {entry.row} Column: {entry.column}</li>
       )}
     </ol>
   );
