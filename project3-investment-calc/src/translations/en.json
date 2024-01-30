@@ -1,0 +1,12 @@
+{
+  "app.title": "Investment calculator",
+  "lbl.initial.investment": "Initial investment",
+  "lbl.annual.investment": "Annual investment",
+  "lbl.expected.return": "Expected return",
+  "lbl.duration": "Duration",
+  "col.year": "Year",
+  "col.investment.value": "Investment value",
+  "col.interest.year": "Interest (year)",
+  "col.total.interest": "Total interest",
+  "col.invested.capital": "Invested capital"
+}
