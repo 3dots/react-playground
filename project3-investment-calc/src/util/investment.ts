@@ -11,7 +11,8 @@ export interface IAnnualData {
 export function calculateInvestmentResults(
   inputs: IInvCalculatorInputs,
 ): IAnnualData[] {
-  const annualData: IAnnualData[] = []
+  const annualData: IAnnualData[] = [];
+
   let investmentValue = inputs.initialInvestment
   let totalInterest = 0
   let investedCapital = inputs.initialInvestment

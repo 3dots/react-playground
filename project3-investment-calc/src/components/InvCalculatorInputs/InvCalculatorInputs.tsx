@@ -23,13 +23,14 @@ export function InvCalculatorInputs() {
   }
 
   return (
-    <div className={cssClasses["user-input"]}>
+    <section className={cssClasses["user-input"]}>
       <label>
         <div>
           <FormattedMessage id="lbl.initial.investment" />
         </div>
         <input
           type="number"
+          required
           value={inputs.initialInvestment}
           onChange={e => changeHandler(e, setInitialInvestment)}
         />
@@ -40,6 +41,7 @@ export function InvCalculatorInputs() {
         </div>
         <input
           type="number"
+          required
           value={inputs.annualInvestment}
           onChange={e => changeHandler(e, setAnnualInvestment)}
         />
@@ -50,6 +52,7 @@ export function InvCalculatorInputs() {
         </div>
         <input
           type="number"
+          required
           value={inputs.expectedReturn}
           onChange={e => changeHandler(e, setExpectedReturn)}
         />
@@ -60,10 +63,11 @@ export function InvCalculatorInputs() {
         </div>
         <input
           type="number"
+          required
           value={inputs.duration}
           onChange={e => changeHandler(e, setDuration)}
         />
       </label>
-    </div>
+    </section>
   )
 }

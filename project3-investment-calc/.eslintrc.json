@@ -26,7 +26,8 @@
           }
         ]
       }
-    ]
+    ],
+    "react/style-prop-object": ["error", { "allow": ["FormattedNumber"] }]
   },
   "overrides": [
     { "files": ["*.{c,m,}{t,j}s", "*.{t,j}sx"] },

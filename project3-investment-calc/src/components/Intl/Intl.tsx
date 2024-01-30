@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import type { IntlFormatters, PrimitiveType } from "react-intl"
 import type { Props as ReactIntlFormattedMessageProps } from "react-intl/src/components/message"
 import {
+  FormattedNumber,
   FormattedMessage as ReactIntlFormattedMessage,
   useIntl as useReactIntl,
 } from "react-intl"
@@ -44,4 +45,27 @@ export function useIntl() {
     ...rest,
     formatMessage: typedFormatMessage,
   }
+}
+
+export interface IFormattedCurrencyProps {
+  currValue: number
+  currency?: string
+  minimumFractionDigits?: number
+  maximumFractionDigits?: number
+}
+
+export function FormattedCurrency(props: IFormattedCurrencyProps) {
+  const currency = props.currency ?? "CAD"
+  const defaultDigits = 2
+  const minimumFractionDigits = props.minimumFractionDigits ?? defaultDigits
+  const maximumFractionDigits = props.maximumFractionDigits ?? defaultDigits
+  return (
+    <FormattedNumber
+      value={props.currValue}
+      style="currency"
+      currency={currency}
+      minimumFractionDigits={minimumFractionDigits}
+      maximumFractionDigits={maximumFractionDigits}
+    />
+  )
 }
