@@ -21,7 +21,7 @@ export default function AuthInputs() {
   const passwordNotValid = submitted && enteredPassword.trim().length < 6;
 
   return (
-    <div id="auth-inputs">
+    <div className="auth-inputs w-full p-8 my-0 mx-auto rounded-lg">
       <div className="controls">
         <p>
           <label>Email</label>
