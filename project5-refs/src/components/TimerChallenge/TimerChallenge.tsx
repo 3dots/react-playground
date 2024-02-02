@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { TargetTime } from "../TargetTime/TargetTime";
-import type { IResultModalApiHandle} from "../ResultModalApi/ResultModalApi";
+import type { IResultModalApiHandle } from "../ResultModalApi/ResultModalApi";
 import { ResultModalApi } from "../ResultModalApi/ResultModalApi";
 
 export interface ITimerChallengeProps {
@@ -8,10 +8,11 @@ export interface ITimerChallengeProps {
   targetTimeSeconds: number;
 }
 
-class TimerChallengeState {
+export class TimerChallengeState {
   isTimerExpired: boolean = false;
   isTimerStarted: boolean = false;
   isWin: boolean = false;
+  timeDiff: number = 0;
 
   public constructor(init?: Partial<TimerChallengeState>) {
     Object.assign(this, init);
@@ -21,10 +22,12 @@ class TimerChallengeState {
 export function TimerChallenge(props: ITimerChallengeProps) {
   const [state, setState] = useState(new TimerChallengeState());
   const timerIdRef = useRef<number | null>(null);
+  const performanceRef = useRef<DOMHighResTimeStamp | null>(null);
   const dialogRef = useRef<IResultModalApiHandle>(null);
 
   const handleStart = () => {
     setState(s => new TimerChallengeState({ ...s, isTimerStarted: true }));
+    performanceRef.current = performance.now();
     timerIdRef.current = setTimeout(() => {
       setState(
         s =>
@@ -39,12 +42,21 @@ export function TimerChallenge(props: ITimerChallengeProps) {
   };
 
   const handleStop = () => {
-    if (!timerIdRef.current) return;
+    if (!timerIdRef.current || !performanceRef.current) return;
     clearTimeout(timerIdRef.current);
     timerIdRef.current = null;
+
+    let timeDiff = performance.now() - performanceRef.current;
+    performanceRef.current = null;
+
     setState(
       s =>
-        new TimerChallengeState({ ...s, isTimerStarted: false, isWin: true }),
+        new TimerChallengeState({
+          ...s,
+          isTimerStarted: false,
+          isWin: true,
+          timeDiff: props.targetTimeSeconds * 1000 - timeDiff,
+        }),
     );
     dialogRef.current?.open();
   };
@@ -67,8 +79,8 @@ export function TimerChallenge(props: ITimerChallengeProps) {
       /> */}
       <ResultModalApi
         ref={dialogRef}
-        isWin={state.isWin}
         targetTimeSeconds={props.targetTimeSeconds}
+        challengeState={state}
         onClose={handleReset}
       />
       <section className="challenge">
