@@ -32,6 +32,20 @@ export class TimerChallengeState {
       isTimerStarted: false,
     });
   }
+
+  static maybeWin(
+    s: TimerChallengeState,
+    timeDiff: number,
+  ): TimerChallengeState {
+    if (timeDiff < 0) return this.loss(s);
+    let sNew = new TimerChallengeState({
+      ...s,
+      isTimerStarted: false,
+      timeDiff: timeDiff,
+    });
+    sNew.computeIsWin();
+    return sNew;
+  }
 }
 
 export function TimerChallenge(props: ITimerChallengeProps) {
@@ -52,7 +66,8 @@ export function TimerChallenge(props: ITimerChallengeProps) {
   };
 
   const handleStop = () => {
-    if (!timerIdRef.current || !performanceRef.current) return;
+    if (!timerIdRef.current || !performanceRef.current || !dialogRef.current)
+      return;
     clearTimeout(timerIdRef.current);
     timerIdRef.current = null;
 
@@ -61,22 +76,8 @@ export function TimerChallenge(props: ITimerChallengeProps) {
       (performance.now() - performanceRef.current);
     performanceRef.current = null;
 
-    if (timeDiff < 0) {
-      //setTimeout messed up timing calculation. Prefer performance.now() verdict.
-      setState(s => TimerChallengeState.loss(s));
-    } else {
-      setState(s => {
-        let sNew = new TimerChallengeState({
-          ...s,
-          isTimerStarted: false,
-          timeDiff: timeDiff,
-        });
-        sNew.computeIsWin();
-        return sNew;
-      });
-    }
-
-    dialogRef.current?.open();
+    setState(s => TimerChallengeState.maybeWin(s, timeDiff));
+    dialogRef.current.open();
   };
 
   const handleReset = () =>
