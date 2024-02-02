@@ -1,9 +1,8 @@
 import { useAppDispatch } from "@/app/hooks"
 import { setName } from "@/features/inv-calculator/timerGameSlice"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 class PlayerState {
-  name: string = ""
   isSaved: boolean = false
 
   public constructor(init?: Partial<PlayerState>) {
@@ -12,27 +11,29 @@ class PlayerState {
 }
 
 export function Player() {
-  const dispatch = useAppDispatch()
-  const [playerState, setPlayerState] = useState(new PlayerState())
+  const dispatch = useAppDispatch();
+  const [playerState, setPlayerState] = useState(new PlayerState());
+  const playerNameInput = useRef<HTMLInputElement>(null);
 
   const handleSave = () => {
+    if (!playerNameInput.current) return;
     setPlayerState(p => new PlayerState({ ...p, isSaved: true }))
-    dispatch(setName(playerState.name))
+    dispatch(setName(playerNameInput.current.value))
   }
 
   return (
     <section id="player">
       <h2>
-        Welcome {playerState.isSaved ? playerState.name : "unknown entity"}
+        Welcome {playerState.isSaved && playerNameInput.current ? playerNameInput.current.value : "unknown entity"}
       </h2>
       <p>
         <input
           type="text"
-          value={playerState.name}
-          onChange={e =>
+          ref={playerNameInput}
+          onChange={() =>
             setPlayerState(
               p =>
-                new PlayerState({ ...p, name: e.target.value, isSaved: false }),
+                new PlayerState({ ...p, isSaved: false }),
             )
           }
         />
