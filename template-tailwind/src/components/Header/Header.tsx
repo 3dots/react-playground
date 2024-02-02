@@ -1,3 +1,3 @@
 export function HeaderContent() {
-  return <>Header</>
+  return <>Header</>;
 }

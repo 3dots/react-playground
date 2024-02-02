@@ -1,4 +1,4 @@
-import logo from "@/assets/logo.png"
+import logo from "@/assets/logo.png";
 
 export function HeaderContent() {
   return (
@@ -7,5 +7,5 @@ export function HeaderContent() {
       <h1 className="text-2xl md:text-4xl">ReactArt</h1>
       <p>A community of artists and art-lovers.</p>
     </>
-  )
+  );
 }

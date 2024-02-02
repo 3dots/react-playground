@@ -1,44 +1,24 @@
-import { useAppDispatch } from "@/app/hooks"
-import { setName } from "@/features/inv-calculator/timerGameSlice"
-import { useRef, useState } from "react"
-
-class PlayerState {
-  isSaved: boolean = false
-
-  public constructor(init?: Partial<PlayerState>) {
-    Object.assign(this, init)
-  }
-}
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { selectName, setName } from "@/features/inv-calculator/timerGameSlice";
+import { useRef } from "react";
 
 export function Player() {
   const dispatch = useAppDispatch();
-  const [playerState, setPlayerState] = useState(new PlayerState());
+  const name = useAppSelector(selectName);
   const playerNameInput = useRef<HTMLInputElement>(null);
 
   const handleSave = () => {
     if (!playerNameInput.current) return;
-    setPlayerState(p => new PlayerState({ ...p, isSaved: true }))
-    dispatch(setName(playerNameInput.current.value))
-  }
+    dispatch(setName(playerNameInput.current.value));
+  };
 
   return (
     <section id="player">
-      <h2>
-        Welcome {playerState.isSaved && playerNameInput.current ? playerNameInput.current.value : "unknown entity"}
-      </h2>
+      <h2>Welcome {name === "" ? "unknown entity" : name}</h2>
       <p>
-        <input
-          type="text"
-          ref={playerNameInput}
-          onChange={() =>
-            setPlayerState(
-              p =>
-                new PlayerState({ ...p, isSaved: false }),
-            )
-          }
-        />
+        <input type="text" ref={playerNameInput} />
         <button onClick={handleSave}>Set name</button>
       </p>
     </section>
-  )
+  );
 }

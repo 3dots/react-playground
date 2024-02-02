@@ -1,6 +1,6 @@
-import { HeaderContent } from "./components/Header/Header"
-import { InvCalculatorInputs } from "./components/InvCalculatorInputs/InvCalculatorInputs"
-import { InvResults } from "./components/InvResults/InvResults"
+import { HeaderContent } from "./components/Header/Header";
+import { InvCalculatorInputs } from "./components/InvCalculatorInputs/InvCalculatorInputs";
+import { InvResults } from "./components/InvResults/InvResults";
 
 export function App() {
   return (
@@ -14,5 +14,5 @@ export function App() {
         <InvResults />
       </main>
     </>
-  )
+  );
 }

@@ -1,11 +1,11 @@
-import { selectAnnualData } from "@/features/inv-calculator/invCalculatorSlice"
-import { FormattedCurrency, FormattedMessage } from "../Intl/Intl"
-import { useAppSelector } from "@/app/hooks"
-import type { IAnnualData } from "@/util/investment"
-import cssClasses from "./InvResults.module.scss"
+import { selectAnnualData } from "@/features/inv-calculator/invCalculatorSlice";
+import { FormattedCurrency, FormattedMessage } from "../Intl/Intl";
+import { useAppSelector } from "@/app/hooks";
+import type { IAnnualData } from "@/util/investment";
+import cssClasses from "./InvResults.module.scss";
 
 export function InvResults() {
-  const annualData: IAnnualData[] = useAppSelector(selectAnnualData)
+  const annualData: IAnnualData[] = useAppSelector(selectAnnualData);
 
   const FormatCurrencyInvoke = function (props: { currValue: number }) {
     return (
@@ -14,8 +14,8 @@ export function InvResults() {
         minimumFractionDigits={0}
         maximumFractionDigits={0}
       />
-    )
-  }
+    );
+  };
 
   return (
     <section>
@@ -60,5 +60,5 @@ export function InvResults() {
         </tbody>
       </table>
     </section>
-  )
+  );
 }

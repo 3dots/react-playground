@@ -1,26 +1,26 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import type { IInvCalculatorInputs } from "@/features/inv-calculator/invCalculatorSlice"
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import type { IInvCalculatorInputs } from "@/features/inv-calculator/invCalculatorSlice";
 import {
   selectInput,
   setAnnualInvestment,
   setDuration,
   setExpectedReturn,
   setInitialInvestment,
-} from "@/features/inv-calculator/invCalculatorSlice"
-import cssClasses from "./InvCalculatorInputs.module.scss"
-import type { ActionCreatorWithPayload } from "@reduxjs/toolkit"
-import { FormattedMessage } from "../Intl/Intl"
+} from "@/features/inv-calculator/invCalculatorSlice";
+import cssClasses from "./InvCalculatorInputs.module.scss";
+import type { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { FormattedMessage } from "../Intl/Intl";
 
 export function InvCalculatorInputs() {
-  const dispatch = useAppDispatch()
-  const inputs: IInvCalculatorInputs = useAppSelector(selectInput)
+  const dispatch = useAppDispatch();
+  const inputs: IInvCalculatorInputs = useAppSelector(selectInput);
 
   const changeHandler = function (
     e: React.ChangeEvent<HTMLInputElement>,
     action: ActionCreatorWithPayload<number>,
   ) {
-    dispatch(action(e.target.valueAsNumber))
-  }
+    dispatch(action(e.target.valueAsNumber));
+  };
 
   return (
     <section className={cssClasses["user-input"]}>
@@ -69,5 +69,5 @@ export function InvCalculatorInputs() {
         />
       </label>
     </section>
-  )
+  );
 }

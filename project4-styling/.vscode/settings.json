@@ -1,9 +1,9 @@
 {
-    "files.associations": {
-        "*.css": "tailwindcss"
-    },
-    "editor.quickSuggestions": {
-        "strings": "on"
-    },
-    "editor.tabSize": 2
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "editor.tabSize": 2
 }

@@ -1,5 +1,5 @@
-import { HeaderContent } from "./components/Header/Header"
-import { FormattedMessage } from "./components/Intl/Intl"
+import { HeaderContent } from "./components/Header/Header";
+import { FormattedMessage } from "./components/Intl/Intl";
 
 export function App() {
   return (
@@ -14,5 +14,5 @@ export function App() {
         Hello world!
       </main>
     </>
-  )
+  );
 }
