@@ -1,9 +1,8 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { TargetTime } from "../TargetTime/TargetTime";
-import type { TimerChallengeState } from "../TimerChallenge/TimerChallenge"
+import type { TimerChallengeState } from "../TimerChallenge/TimerChallenge";
 
 export interface IResultModalApiProps {
-  targetTimeSeconds: number;
   challengeState: TimerChallengeState;
   onClose: () => void;
 }
@@ -32,11 +31,13 @@ export const ResultModalApi = forwardRef<
       <p>
         The traget time was{" "}
         <strong>
-          <TargetTime targetTimeSeconds={props.targetTimeSeconds} />
+          <TargetTime
+            targetTimeSeconds={props.challengeState.targetTimeSeconds}
+          />
         </strong>
         .
       </p>
-      {isWin && <p>You were {props.challengeState.timeDiff}ms close to timer expiry.</p>}
+      <p>You were {props.challengeState.timeDiff}ms close to timer expiry.</p>
       <form method="dialog">
         <button onClick={props.onClose}>Close</button>
       </form>

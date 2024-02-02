@@ -9,18 +9,35 @@ export interface ITimerChallengeProps {
 }
 
 export class TimerChallengeState {
+  targetTimeSeconds: number = 0;
   isTimerExpired: boolean = false;
   isTimerStarted: boolean = false;
-  isWin: boolean = false;
   timeDiff: number = 0;
+  isWin: boolean = false;
 
-  public constructor(init?: Partial<TimerChallengeState>) {
+  computeIsWin() {
+    this.isWin = this.isTimerExpired
+      ? false
+      : this.timeDiff / (1000 * this.targetTimeSeconds) < 0.2;
+  }
+
+  constructor(init?: Partial<TimerChallengeState>) {
     Object.assign(this, init);
+  }
+
+  static loss(s: TimerChallengeState): TimerChallengeState {
+    return new TimerChallengeState({
+      ...s,
+      isTimerExpired: true,
+      isTimerStarted: false,
+    });
   }
 }
 
 export function TimerChallenge(props: ITimerChallengeProps) {
-  const [state, setState] = useState(new TimerChallengeState());
+  const [state, setState] = useState(
+    new TimerChallengeState({ targetTimeSeconds: props.targetTimeSeconds }),
+  );
   const timerIdRef = useRef<number | null>(null);
   const performanceRef = useRef<DOMHighResTimeStamp | null>(null);
   const dialogRef = useRef<IResultModalApiHandle>(null);
@@ -29,14 +46,7 @@ export function TimerChallenge(props: ITimerChallengeProps) {
     setState(s => new TimerChallengeState({ ...s, isTimerStarted: true }));
     performanceRef.current = performance.now();
     timerIdRef.current = setTimeout(() => {
-      setState(
-        s =>
-          new TimerChallengeState({
-            ...s,
-            isTimerExpired: true,
-            isTimerStarted: false,
-          }),
-      );
+      setState(s => TimerChallengeState.loss(s));
       dialogRef.current?.open();
     }, props.targetTimeSeconds * 1000);
   };
@@ -46,22 +56,33 @@ export function TimerChallenge(props: ITimerChallengeProps) {
     clearTimeout(timerIdRef.current);
     timerIdRef.current = null;
 
-    let timeDiff = performance.now() - performanceRef.current;
+    let timeDiff =
+      props.targetTimeSeconds * 1000 -
+      (performance.now() - performanceRef.current);
     performanceRef.current = null;
 
-    setState(
-      s =>
-        new TimerChallengeState({
+    if (timeDiff < 0) {
+      //setTimeout messed up timing calculation. Prefer performance.now() verdict.
+      setState(s => TimerChallengeState.loss(s));
+    } else {
+      setState(s => {
+        let sNew = new TimerChallengeState({
           ...s,
           isTimerStarted: false,
-          isWin: true,
-          timeDiff: props.targetTimeSeconds * 1000 - timeDiff,
-        }),
-    );
+          timeDiff: timeDiff,
+        });
+        sNew.computeIsWin();
+        return sNew;
+      });
+    }
+
     dialogRef.current?.open();
   };
 
-  const handleReset = () => setState(new TimerChallengeState());
+  const handleReset = () =>
+    setState(
+      new TimerChallengeState({ targetTimeSeconds: props.targetTimeSeconds }),
+    );
 
   return (
     <>
@@ -79,7 +100,6 @@ export function TimerChallenge(props: ITimerChallengeProps) {
       /> */}
       <ResultModalApi
         ref={dialogRef}
-        targetTimeSeconds={props.targetTimeSeconds}
         challengeState={state}
         onClose={handleReset}
       />
