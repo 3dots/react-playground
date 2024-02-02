@@ -36,12 +36,10 @@ export const ResultModalApi = forwardRef<
         </strong>
         .
       </p>
-      {challengeState.isWin && (
-        <>
-          <p>You were {challengeState.timeDiff}ms close to timer expiry.</p>
-          <p>Score: {challengeState.score.toFixed(0)}</p>
-        </>
+      {!challengeState.isTimerExpired && (
+        <p>You were {challengeState.timeDiff}ms close to timer expiry.</p>
       )}
+      {challengeState.isWin && <p>Score: {challengeState.score.toFixed(0)}</p>}
       <form method="dialog">
         <button onClick={props.onClose}>Close</button>
       </form>
