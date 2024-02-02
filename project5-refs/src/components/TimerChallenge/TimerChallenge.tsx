@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
+import { TargetTime } from "../TargetTime/TargetTime";
+import { ResultModal } from "../ResultModal/ResultModal";
 
-export interface ITimerChallenge {
+export interface ITimerChallengeProps {
   title: string;
   targetTimeSeconds: number;
 }
@@ -8,15 +10,17 @@ export interface ITimerChallenge {
 class TimerChallengeState {
   isTimerExpired: boolean = false;
   isTimerStarted: boolean = false;
+  isWin: boolean = false;
 
   public constructor(init?: Partial<TimerChallengeState>) {
     Object.assign(this, init);
   }
 }
 
-export function TimerChallenge(props: ITimerChallenge) {
+export function TimerChallenge(props: ITimerChallengeProps) {
   const [state, setState] = useState(new TimerChallengeState());
   const timerIdRef = useRef<number | null>(null);
+  const dialogElRef = useRef<HTMLDialogElement>(null);
 
   const handleStart = () => {
     setState(s => new TimerChallengeState({ ...s, isTimerStarted: true }));
@@ -29,6 +33,7 @@ export function TimerChallenge(props: ITimerChallenge) {
             isTimerStarted: false,
           }),
       );
+      dialogElRef.current?.showModal();
     }, props.targetTimeSeconds * 1000);
   };
 
@@ -36,33 +41,36 @@ export function TimerChallenge(props: ITimerChallenge) {
     if (!timerIdRef.current) return;
     clearTimeout(timerIdRef.current);
     timerIdRef.current = null;
-    setState(s => new TimerChallengeState({ ...s, isTimerStarted: false }));
+    setState(s => new TimerChallengeState({ ...s, isTimerStarted: false, isWin: true }));
+    dialogElRef.current?.showModal();
   };
 
   return (
-    <section className="challenge">
-      <h2>{props.title}</h2>
-      {state.isTimerExpired && <p>You lost!</p>}
-      <p className="challenge-time">
-        {props.targetTimeSeconds} second{props.targetTimeSeconds > 1 ? "s" : ""}
-      </p>
-      <p>
-        {!state.isTimerExpired && !state.isTimerStarted && (
-          <button onClick={handleStart}>Start challenge</button>
-        )}
-        {state.isTimerStarted && (
-          <button onClick={handleStop}>Stop challenge</button>
-        )}
-        {state.isTimerExpired && (
-          <button onClick={() => setState(new TimerChallengeState())}>
-            Reset challenge
-          </button>
-        )}
-      </p>
-      <p className={`${state.isTimerStarted ? "active" : ""} mt-2`}>
-        {state.isTimerStarted && "Timer is running"}
-        {!state.isTimerStarted && "Timer inactive"}
-      </p>
-    </section>
+    <>
+      <ResultModal
+        isWin={state.isWin}
+        targetTimeSeconds={props.targetTimeSeconds}
+        dialogElRef={dialogElRef}
+        onClose={() => setState(new TimerChallengeState())}
+      />
+      <section className="challenge">
+        <h2>{props.title}</h2>
+        <p className="challenge-time">
+          <TargetTime targetTimeSeconds={props.targetTimeSeconds} />
+        </p>
+        <p>
+          {!state.isTimerStarted && (
+            <button onClick={handleStart}>Start challenge</button>
+          )}
+          {state.isTimerStarted && (
+            <button onClick={handleStop}>Stop challenge</button>
+          )}
+        </p>
+        <p className={`${state.isTimerStarted ? "active" : ""} mt-2`}>
+          {state.isTimerStarted && "Timer is running"}
+          {!state.isTimerStarted && "Timer inactive"}
+        </p>
+      </section>
+    </>
   );
 }
