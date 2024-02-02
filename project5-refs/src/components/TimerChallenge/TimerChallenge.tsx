@@ -50,7 +50,7 @@ export function TimerChallenge(props: ITimerChallengeProps) {
       <ResultModal
         isWin={state.isWin}
         targetTimeSeconds={props.targetTimeSeconds}
-        dialogElRef={dialogElRef}
+        ref={dialogElRef}
         onClose={() => setState(new TimerChallengeState())}
       />
       <section className="challenge">

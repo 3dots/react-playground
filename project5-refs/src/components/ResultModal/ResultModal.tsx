@@ -1,15 +1,15 @@
+import { forwardRef } from "react";
 import { TargetTime } from "../TargetTime/TargetTime";
 
 export interface IResultModalProps {
   isWin: boolean;
   targetTimeSeconds: number;
-  dialogElRef: React.RefObject<HTMLDialogElement>;
   onClose: () => void;
 }
 
-export function ResultModal(props: IResultModalProps) {
+export const ResultModal = forwardRef((props: IResultModalProps, ref: React.ForwardedRef<HTMLDialogElement>) => {
   return (
-    <dialog className="result-modal" ref={props.dialogElRef}>
+    <dialog className="result-modal" ref={ref}>
       <h2>{props.isWin ? "You won!" : "You lost!"}</h2>
       <p>
         The traget time was{" "}
@@ -24,4 +24,4 @@ export function ResultModal(props: IResultModalProps) {
       </form>
     </dialog>
   );
-}
+});
