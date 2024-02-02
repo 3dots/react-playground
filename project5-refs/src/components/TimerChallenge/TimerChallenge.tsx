@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { TargetTime } from "../TargetTime/TargetTime";
-import { ResultModal } from "../ResultModal/ResultModal";
+import type { IResultModalApiHandle} from "../ResultModalApi/ResultModalApi";
+import { ResultModalApi } from "../ResultModalApi/ResultModalApi";
 
 export interface ITimerChallengeProps {
   title: string;
@@ -20,7 +21,7 @@ class TimerChallengeState {
 export function TimerChallenge(props: ITimerChallengeProps) {
   const [state, setState] = useState(new TimerChallengeState());
   const timerIdRef = useRef<number | null>(null);
-  const dialogElRef = useRef<HTMLDialogElement>(null);
+  const dialogRef = useRef<IResultModalApiHandle>(null);
 
   const handleStart = () => {
     setState(s => new TimerChallengeState({ ...s, isTimerStarted: true }));
@@ -33,7 +34,7 @@ export function TimerChallenge(props: ITimerChallengeProps) {
             isTimerStarted: false,
           }),
       );
-      dialogElRef.current?.showModal();
+      dialogRef.current?.open();
     }, props.targetTimeSeconds * 1000);
   };
 
@@ -41,17 +42,34 @@ export function TimerChallenge(props: ITimerChallengeProps) {
     if (!timerIdRef.current) return;
     clearTimeout(timerIdRef.current);
     timerIdRef.current = null;
-    setState(s => new TimerChallengeState({ ...s, isTimerStarted: false, isWin: true }));
-    dialogElRef.current?.showModal();
+    setState(
+      s =>
+        new TimerChallengeState({ ...s, isTimerStarted: false, isWin: true }),
+    );
+    dialogRef.current?.open();
   };
+
+  const handleReset = () => setState(new TimerChallengeState());
 
   return (
     <>
-      <ResultModal
+      {/* <ResultModalProps
         isWin={state.isWin}
         targetTimeSeconds={props.targetTimeSeconds}
+        dialogElRef={dialogElRef}
+        onClose={handleReset}
+      /> */}
+      {/* <ResultModalForwardRef
         ref={dialogElRef}
-        onClose={() => setState(new TimerChallengeState())}
+        isWin={state.isWin}
+        targetTimeSeconds={props.targetTimeSeconds}
+        onClose={handleReset}
+      /> */}
+      <ResultModalApi
+        ref={dialogRef}
+        isWin={state.isWin}
+        targetTimeSeconds={props.targetTimeSeconds}
+        onClose={handleReset}
       />
       <section className="challenge">
         <h2>{props.title}</h2>
