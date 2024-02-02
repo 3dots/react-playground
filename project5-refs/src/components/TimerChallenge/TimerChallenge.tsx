@@ -2,50 +2,11 @@ import { useRef, useState } from "react";
 import { TargetTime } from "../TargetTime/TargetTime";
 import type { IResultModalApiHandle } from "../ResultModalApi/ResultModalApi";
 import { ResultModalApi } from "../ResultModalApi/ResultModalApi";
+import { TimerChallengeState } from "./TimerChallengeState";
 
 export interface ITimerChallengeProps {
   title: string;
   targetTimeSeconds: number;
-}
-
-export class TimerChallengeState {
-  targetTimeSeconds: number = 0;
-  isTimerExpired: boolean = false;
-  isTimerStarted: boolean = false;
-  timeDiff: number = 0;
-  isWin: boolean = false;
-
-  computeIsWin() {
-    this.isWin = this.isTimerExpired
-      ? false
-      : this.timeDiff / (1000 * this.targetTimeSeconds) < 0.2;
-  }
-
-  constructor(init?: Partial<TimerChallengeState>) {
-    Object.assign(this, init);
-  }
-
-  static loss(s: TimerChallengeState): TimerChallengeState {
-    return new TimerChallengeState({
-      ...s,
-      isTimerExpired: true,
-      isTimerStarted: false,
-    });
-  }
-
-  static maybeWin(
-    s: TimerChallengeState,
-    timeDiff: number,
-  ): TimerChallengeState {
-    if (timeDiff < 0) return this.loss(s);
-    let sNew = new TimerChallengeState({
-      ...s,
-      isTimerStarted: false,
-      timeDiff: timeDiff,
-    });
-    sNew.computeIsWin();
-    return sNew;
-  }
 }
 
 export function TimerChallenge(props: ITimerChallengeProps) {
