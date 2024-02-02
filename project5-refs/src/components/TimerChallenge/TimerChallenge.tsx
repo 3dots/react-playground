@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export interface ITimerChallenge {
   title: string;
@@ -6,7 +6,8 @@ export interface ITimerChallenge {
 }
 
 class TimerChallengeState {
-  isTimeExpired: boolean = false;
+  isTimerExpired: boolean = false;
+  isTimerStarted: boolean = false;
 
   public constructor(init?: Partial<TimerChallengeState>) {
     Object.assign(this, init);
@@ -15,21 +16,53 @@ class TimerChallengeState {
 
 export function TimerChallenge(props: ITimerChallenge) {
   const [state, setState] = useState(new TimerChallengeState());
+  const timerIdRef = useRef<number | null>(null);
 
   const handleStart = () => {
-    setTimeout(() => {}, props.targetTimeSeconds * 1000);
+    setState(s => new TimerChallengeState({ ...s, isTimerStarted: true }));
+    timerIdRef.current = setTimeout(() => {
+      setState(
+        s =>
+          new TimerChallengeState({
+            ...s,
+            isTimerExpired: true,
+            isTimerStarted: false,
+          }),
+      );
+    }, props.targetTimeSeconds * 1000);
+  };
+
+  const handleStop = () => {
+    if (!timerIdRef.current) return;
+    clearTimeout(timerIdRef.current);
+    timerIdRef.current = null;
+    setState(s => new TimerChallengeState({ ...s, isTimerStarted: false }));
   };
 
   return (
     <section className="challenge">
       <h2>{props.title}</h2>
+      {state.isTimerExpired && <p>You lost!</p>}
       <p className="challenge-time">
         {props.targetTimeSeconds} second{props.targetTimeSeconds > 1 ? "s" : ""}
       </p>
       <p>
-        <button>Start challenge</button>
+        {!state.isTimerExpired && !state.isTimerStarted && (
+          <button onClick={handleStart}>Start challenge</button>
+        )}
+        {state.isTimerStarted && (
+          <button onClick={handleStop}>Stop challenge</button>
+        )}
+        {state.isTimerExpired && (
+          <button onClick={() => setState(new TimerChallengeState())}>
+            Reset challenge
+          </button>
+        )}
       </p>
-      <p className="">Time is running</p>
+      <p className={`${state.isTimerStarted ? "active" : ""} mt-2`}>
+        {state.isTimerStarted && "Timer is running"}
+        {!state.isTimerStarted && "Timer inactive"}
+      </p>
     </section>
   );
 }
