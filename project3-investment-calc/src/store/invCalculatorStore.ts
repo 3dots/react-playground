@@ -1,11 +1,33 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
-interface BearState {
-  bears: number
-  increase: (by: number) => void
+export class InvCalculatorState {
+  initialInvestment: number = 0;
+  annualInvestment: number = 0;
+  expectedReturn: number = 0;
+  duration: number = 0;
+
+  public constructor(init?: Partial<InvCalculatorState>) {
+    Object.assign(this, init);
+  }
+
+  //can later extend this if have nested classes to use constructors for those
+  copy() {
+    return { ...this }; 
+  }
+
+  setInitialInvestmentAction(x: number): InvCalculatorState {
+    return new InvCalculatorState({ ...this.copy(), initialInvestment: x });
+  }
+  
 }
 
-export const useBearStore = create<BearState>()((set) => ({
-  bears: 0,
-  increase: (by) => set((state) => ({ bears: state.bears + by })),
-}))
+interface ITestStateWrapper {
+  state: TestState;
+  increaseCountAction: (by: number) => void;
+}
+
+export const useTestStore = create<ITestStateWrapper>()(set => ({
+  state: new TestState(),
+  increaseCountAction: by =>
+    set(sw => ({ state: sw.state.increaseCountAction(by) })),
+}));
