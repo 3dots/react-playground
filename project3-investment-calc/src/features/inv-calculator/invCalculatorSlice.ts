@@ -1,6 +1,4 @@
 import { calculateInvestmentResults } from "@/util/investment";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
 
 export interface IInvCalculatorInputs {
   initialInvestment: number;
