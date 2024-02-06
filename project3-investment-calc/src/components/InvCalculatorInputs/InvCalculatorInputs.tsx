@@ -1,25 +1,16 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import type { IInvCalculatorInputs } from "@/features/inv-calculator/invCalculatorSlice";
-import {
-  selectInput,
-  setAnnualInvestment,
-  setDuration,
-  setExpectedReturn,
-  setInitialInvestment,
-} from "@/features/inv-calculator/invCalculatorSlice";
 import cssClasses from "./InvCalculatorInputs.module.scss";
-import type { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { FormattedMessage } from "../Intl/Intl";
+import { useInvCalculatorStore } from "@/store/invCalculatorStore";
 
 export function InvCalculatorInputs() {
-  const dispatch = useAppDispatch();
-  const inputs: IInvCalculatorInputs = useAppSelector(selectInput);
+  const sw = useInvCalculatorStore();
+  const state = sw.state;
 
   const changeHandler = function (
     e: React.ChangeEvent<HTMLInputElement>,
-    action: ActionCreatorWithPayload<number>,
+    action: (x: number) => void,
   ) {
-    dispatch(action(e.target.valueAsNumber));
+    action(e.target.valueAsNumber);
   };
 
   return (
@@ -31,8 +22,8 @@ export function InvCalculatorInputs() {
         <input
           type="number"
           required
-          value={inputs.initialInvestment}
-          onChange={e => changeHandler(e, setInitialInvestment)}
+          value={state.initialInvestment}
+          onChange={e => changeHandler(e, sw.setInitialInvestmentAction)}
         />
       </label>
       <label>
@@ -42,8 +33,8 @@ export function InvCalculatorInputs() {
         <input
           type="number"
           required
-          value={inputs.annualInvestment}
-          onChange={e => changeHandler(e, setAnnualInvestment)}
+          value={state.annualInvestment}
+          onChange={e => changeHandler(e, sw.setAnnualInvestmentAction)}
         />
       </label>
       <label>
@@ -53,8 +44,8 @@ export function InvCalculatorInputs() {
         <input
           type="number"
           required
-          value={inputs.expectedReturn}
-          onChange={e => changeHandler(e, setExpectedReturn)}
+          value={state.expectedReturn}
+          onChange={e => changeHandler(e, sw.setExpectedReturnAction)}
         />
       </label>
       <label>
@@ -64,8 +55,8 @@ export function InvCalculatorInputs() {
         <input
           type="number"
           required
-          value={inputs.duration}
-          onChange={e => changeHandler(e, setDuration)}
+          value={state.duration}
+          onChange={e => changeHandler(e, sw.setDurationAction)}
         />
       </label>
     </section>

@@ -1,4 +1,4 @@
-import type { IInvCalculatorInputs } from "@/features/inv-calculator/invCalculatorSlice";
+import { InvCalculatorState } from "@/store/invCalculatorStore";
 
 export interface IAnnualData {
   year: number;
@@ -9,7 +9,7 @@ export interface IAnnualData {
 }
 
 export function calculateInvestmentResults(
-  inputs: IInvCalculatorInputs,
+  inputs: InvCalculatorState,
 ): IAnnualData[] {
   const annualData: IAnnualData[] = [];
 
