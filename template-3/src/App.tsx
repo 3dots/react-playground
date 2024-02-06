@@ -1,10 +1,9 @@
 import { HeaderContent } from "./components/Header/Header";
 import { FormattedMessage } from "./components/Intl/Intl";
-import { useBearStore } from "./store/testStore";
+import { useTestStore } from "./store/testStore";
 
 export function App() {
-
-  const { bears, increase } = useBearStore();
+  const { state, increaseCountAction } = useTestStore();
 
   return (
     <>
@@ -15,11 +14,9 @@ export function App() {
         <h1 className="center">
           <FormattedMessage id="app.title" />
         </h1>
+        <div>{state.count}</div>
         <div>
-          {bears}
-        </div>
-        <div>
-          <button onClick={() => increase(5)}>Test increase</button>
+          <button onClick={() => increaseCountAction(5)}>Test increase</button>
         </div>
       </main>
     </>

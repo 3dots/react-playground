@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
 export class TestState {
   count: number = 0;
@@ -7,19 +7,18 @@ export class TestState {
     Object.assign(this, init);
   }
 
-  static increaseCount(prev: TestState, by: number) : TestState {
-    return new TestState({ ...prev, count: prev.count + by });
+  increaseCountAction(by: number): TestState {
+    return new TestState({ ...this, count: this.count + by });
   }
 }
 
 interface ITestStateWrapper {
-  state: TestState
-  increaseCount: (by: number) => void
+  state: TestState;
+  increaseCountAction: (by: number) => void;
 }
 
-export const useBearStore = create<ITestStateWrapper>()((set) => ({
+export const useTestStore = create<ITestStateWrapper>()(set => ({
   state: new TestState(),
-  increaseCount: (by) => set((sw) => {
-    return { state: TestState.increaseCount(sw.state, by) };
-  }, true),
-}))
+  increaseCountAction: by =>
+    set(sw => ({ state: sw.state.increaseCountAction(by) })),
+}));

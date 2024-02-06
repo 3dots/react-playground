@@ -7,8 +7,8 @@ import messages_en from "./translations/en.json";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-      <IntlProvider locale="en-CA" messages={messages_en}>
-        <App />
-      </IntlProvider>
+    <IntlProvider locale="en-CA" messages={messages_en}>
+      <App />
+    </IntlProvider>
   </React.StrictMode>,
 );
