@@ -15,6 +15,7 @@ export function TimerChallenge(props: ITimerChallengeProps) {
   );
   const timerIdRef = useRef<number | null>(null);
   const performanceRef = useRef<DOMHighResTimeStamp | null>(null);
+  //const dialogElRef = useRef<HTMLDialogElement>(null);
   const dialogRef = useRef<IResultModalApiHandle>(null);
 
   const handleStart = () => {

@@ -1,12 +1,15 @@
 {
   "ttl.your.projects": "Your projects",
   "ttl.no.project.selected": "No project selected",
+  "ttl.adding.new.project": "Adding new project",
   "btn.add.project": "+ Add project",
   "btn.save": "Save",
   "btn.cancel": "Cancel",
+  "btn.reset": "Reset",
   "lbl.title": "Title",
   "lbl.description": "Description",
   "lbl.due.date": "Due date",
   "img.tasks": "Tasks image",
-  "txt.select.project.or": "Select a project or get started with a new one."
+  "txt.select.project.or": "Select a project or get started with a new one.",
+  "txt.is.empty": "{label} is required."
 }

@@ -22,6 +22,14 @@ type FormattedMessageProps = ReactIntlFormattedMessageProps<
   id?: IntlMessageKeys;
 };
 
+export type TypedFormatMessage = (
+  descriptor: FormatMessageArgs[0] & {
+    id?: IntlMessageKeys;
+  },
+  values?: Record<string, PrimitiveType | FormatXMLElementFn<string, string>>,
+  options?: FormatMessageArgs[2],
+) => string;
+
 export function FormattedMessage({ id, ...rest }: FormattedMessageProps) {
   return <ReactIntlFormattedMessage id={id} {...rest} />;
 }
@@ -31,7 +39,7 @@ export function useIntl() {
   const { formatMessage, ...rest } = useReactIntl();
 
   // Re-write the formatMessage function but with a strongly-typed id.
-  const typedFormatMessage = (
+  const typedFormatMessage : TypedFormatMessage = (
     descriptor: FormatMessageArgs[0] & {
       id?: IntlMessageKeys;
     },

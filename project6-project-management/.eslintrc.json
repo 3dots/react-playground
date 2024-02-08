@@ -3,11 +3,15 @@
     "eslint:recommended",
     "react-app",
     "plugin:react/jsx-runtime",
-    "prettier"
+    "prettier",
+    "plugin:react-hooks/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": { "project": true, "tsconfigRootDir": "./" },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks"
+  ],
   "root": true,
   "ignorePatterns": [
     "dist",
@@ -20,19 +24,9 @@
       2,
       { "fixStyle": "separate-type-imports" }
     ],
-    "@typescript-eslint/no-restricted-imports": [
-      2,
-      {
-        "paths": [
-          {
-            "name": "react-redux",
-            "importNames": ["useSelector", "useStore", "useDispatch"],
-            "message": "Please use pre-typed versions from `src/app/hooks.ts` instead."
-          }
-        ]
-      }
-    ],
-    "react/style-prop-object": ["error", { "allow": ["FormattedNumber"] }]
+    "react/style-prop-object": ["error", { "allow": ["FormattedNumber"] }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error"
   },
   "overrides": [
     { "files": ["*.{c,m,}{t,j}s", "*.{t,j}sx"] },

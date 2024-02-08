@@ -5,3 +5,7 @@
 body {
   display: block;
 }
+
+.fix-button-text {
+  margin-top: -2.5px;
+}

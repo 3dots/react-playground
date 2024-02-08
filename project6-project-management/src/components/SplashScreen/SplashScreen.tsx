@@ -1,10 +1,11 @@
 import noProj from "@/assets/no-projects.png";
-import { useProjectsStore } from "@/store/testStore";
+import { useProjectsStore } from "@/store/projectsStore";
 import { FormattedMessage, useIntl } from "../Common/Intl/Intl";
 import { RButton } from "../Common/RButton/RButton";
+import { RH1 } from "../Common/RH/RH";
 
 export function SplashScreen() {
-  const addProjectAction = useProjectsStore(sw => sw.addProjectAction);
+  const addProjectAction = useProjectsStore(sw => sw.beginAddProjectAction);  
   const intl = useIntl();
 
   return (
@@ -14,9 +15,9 @@ export function SplashScreen() {
         alt={intl.formatMessage({ id: "img.tasks" })}
         className="w-20 mb-2 mx-auto"
       />
-      <h1 className="text-2xl mb-6 font-bold">
+      <RH1 className="mb-6" isDefaultMB={false}>
         <FormattedMessage id="ttl.no.project.selected" />
-      </h1>
+      </RH1>
       <p className="mb-4">
         <FormattedMessage id="txt.select.project.or" />
       </p>
