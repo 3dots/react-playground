@@ -10,7 +10,7 @@ export function App() {
       >
         <SideBarContent />
       </aside>
-      <main className={`${cssClasses.main} px-2 pb-2 pt-7 flex flex-col`}>
+      <main className={`${cssClasses.main} px-2 pb-2 pt-7 flex flex-col min-w-0`}>
         <MainContent />
       </main>
     </>

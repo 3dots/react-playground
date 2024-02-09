@@ -44,56 +44,66 @@ export function AddProject() {
   const descriptionErrorId = "description-error";
 
   return (
-    <form
-      className={`${cssClasses.container} mx-auto flex flex-col gap-2`}
-      onSubmit={handleSubmit(handleSave)}
-      noValidate
-    >
-      <div className="flex">
-        <RH1 isDefaultMB={false}>
-          <FormattedMessage id="ttl.adding.new.project" />
-        </RH1>
-        <div className="ml-auto flex gap-2">
-          <RButton
-            buttonType={EnButtonType.Secondary}
-            onClick={cancelAddProjectAction}
-          >
-            <FormattedMessage id="btn.cancel" />
-          </RButton>
-          <RButton type="submit">
-            <FormattedMessage id="btn.save" />
-          </RButton>
+    <div className="flex w-100">
+      <form
+        className={`${cssClasses.form} flex mx-auto flex-col gap-2`}
+        onSubmit={handleSubmit(handleSave)}
+        noValidate
+      >
+        <div className="flex">
+          <RH1 isDefaultMB={false}>
+            <FormattedMessage id="ttl.adding.new.project" />
+          </RH1>
+          <div className="ml-auto flex gap-2">
+            <RButton
+              buttonType={EnButtonType.Secondary}
+              onClick={cancelAddProjectAction}
+            >
+              <FormattedMessage id="btn.cancel" />
+            </RButton>
+            <RButton type="submit">
+              <FormattedMessage id="btn.save" />
+            </RButton>
+          </div>
         </div>
-      </div>
-      <RInput
-        {...register("title", {
-          required: intl.formatMessage(
-            { id: "txt.is.empty" },
-            { label: intl.formatMessage({ id: "lbl.title" }) },
-          )
-        })}
-        isValid={errors.title === undefined}
-        required
-        aria-describedby={errors.title === undefined ? undefined : titleErrorId}
-        maxLength={UsProject.maxLengthTitle}
-      >
-        <FormattedMessage id="lbl.title" />
-      </RInput>
-      {errors.title?.message && <div id={titleErrorId}>{errors.title.message}</div>}
-      <RTextArea
-        {...register("description", {
-          required: intl.formatMessage(
-            { id: "txt.is.empty" },
-            { label: intl.formatMessage({ id: "lbl.description" }) },
-          )
-        })}
-        isValid={errors.description === undefined}
-        aria-describedby={errors.description === undefined ? undefined : descriptionErrorId}
-        required
-      >
-        <FormattedMessage id="lbl.description" />
-      </RTextArea>
-      {errors.description?.message && <div id={descriptionErrorId}>{errors.description.message}</div>}
-    </form>
+        <RInput
+          {...register("title", {
+            required: intl.formatMessage(
+              { id: "txt.is.empty" },
+              { label: intl.formatMessage({ id: "lbl.title" }) },
+            ),
+          })}
+          isValid={errors.title === undefined}
+          required
+          aria-describedby={
+            errors.title === undefined ? undefined : titleErrorId
+          }
+          maxLength={UsProject.maxLengthTitle}
+        >
+          <FormattedMessage id="lbl.title" />
+        </RInput>
+        {errors.title?.message && (
+          <div id={titleErrorId}>{errors.title.message}</div>
+        )}
+        <RTextArea
+          {...register("description", {
+            required: intl.formatMessage(
+              { id: "txt.is.empty" },
+              { label: intl.formatMessage({ id: "lbl.description" }) },
+            ),
+          })}
+          isValid={errors.description === undefined}
+          aria-describedby={
+            errors.description === undefined ? undefined : descriptionErrorId
+          }
+          required
+        >
+          <FormattedMessage id="lbl.description" />
+        </RTextArea>
+        {errors.description?.message && (
+          <div id={descriptionErrorId}>{errors.description.message}</div>
+        )}
+      </form>
+    </div>
   );
 }
