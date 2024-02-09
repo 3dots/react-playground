@@ -18,8 +18,10 @@ export const RTextArea = forwardRef(
     } = { ...props };
 
     let className =
-      "py-1 px-2 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none ";
-    className += isValid ? "focus:border-stone-600" : "invalid:border-red-600";
+      "py-1 px-2 border-b-2 rounded-sm bg-stone-200 text-stone-600 ";
+    className += isValid
+      ? "border-stone-300 focus:border-stone-600 focus:outline-none"
+      : "border-red-600 focus:outline-2 focus:outline-red-600 focus:outline neg-outline";
     if (classNameProp) className += ` ${classNameProp}`;
 
     return (

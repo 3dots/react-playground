@@ -9,3 +9,7 @@ body {
 .fix-button-text {
   margin-top: -2.5px;
 }
+
+.neg-outline {
+  outline-offset: -1px;
+}

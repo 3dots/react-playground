@@ -8,6 +8,7 @@ import { RH1 } from "../Common/RH/RH";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { UsProject } from "@/store/model/UsProject";
 
 type ProjectFormInputs = {
   title: string;
@@ -39,6 +40,9 @@ export function AddProject() {
     //const newProject = new UsProject(data);
   };
 
+  const titleErrorId = "title-error";
+  const descriptionErrorId = "description-error";
+
   return (
     <form
       className={`${cssClasses.container} mx-auto flex flex-col gap-2`}
@@ -66,29 +70,30 @@ export function AddProject() {
           required: intl.formatMessage(
             { id: "txt.is.empty" },
             { label: intl.formatMessage({ id: "lbl.title" }) },
-          ),
-          maxLength: {
-            value: 10,
-            message: "Too long"
-          }
+          )
         })}
-        isValid={errors.title}
+        isValid={errors.title === undefined}
+        required
+        aria-describedby={errors.title === undefined ? undefined : titleErrorId}
+        maxLength={UsProject.maxLengthTitle}
       >
         <FormattedMessage id="lbl.title" />
       </RInput>
-      {errors.title?.message}
+      {errors.title?.message && <div id={titleErrorId}>{errors.title.message}</div>}
       <RTextArea
-        {...register("description", { required: true })}
+        {...register("description", {
+          required: intl.formatMessage(
+            { id: "txt.is.empty" },
+            { label: intl.formatMessage({ id: "lbl.description" }) },
+          )
+        })}
         isValid={errors.description === undefined}
+        aria-describedby={errors.description === undefined ? undefined : descriptionErrorId}
+        required
       >
         <FormattedMessage id="lbl.description" />
       </RTextArea>
-      {errors.description && (
-        <FormattedMessage
-          id="txt.is.empty"
-          values={{ label: intl.formatMessage({ id: "lbl.description" }) }}
-        />
-      )}
+      {errors.description?.message && <div id={descriptionErrorId}>{errors.description.message}</div>}
     </form>
   );
 }

@@ -1,8 +1,7 @@
 import { forwardRef, type PropsWithChildren } from "react";
-import { FieldError } from "react-hook-form";
 
 export interface RInputProps extends React.ComponentProps<"input"> {
-  isValid: FieldError | undefined;
+  isValid: boolean;
 }
 
 export const RInput = forwardRef(
@@ -18,8 +17,11 @@ export const RInput = forwardRef(
       ...rest
     } = { ...props };
 
-    let className = "py-1 px-2 border-b-2 rounded-sm bg-stone-200 text-stone-600 focus:outline-none ";
-    className += isValid === false ? "border-red-600" : "border-stone-300 focus:border-stone-600";
+    let className =
+      "py-1 px-2 border-b-2 rounded-sm bg-stone-200 text-stone-600 ";
+    className += isValid
+      ? "border-stone-300 focus:border-stone-600 focus:outline-none"
+      : "border-red-600 focus:outline-2 focus:outline-red-600 focus:outline neg-outline";
     if (classNameProp) className += ` ${classNameProp}`;
 
     return (
