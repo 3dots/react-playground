@@ -21,7 +21,8 @@ export function RButton(props: PropsWithChildren<IRButtonProps>) {
   const isDarkBackground = isDarkBackgroundProp ?? false;
   const buttonType = buttonTypeProp ?? EnButtonType.Primary;
 
-  let className = "py-2 px-3 rounded-md hover:bg-amber-900 focus:bg-amber-900 flex";
+  let className =
+    "py-2 px-3 rounded-md hover:bg-amber-900 focus:bg-amber-900 flex";
   switch (buttonType) {
     case EnButtonType.Primary:
       className += ` text-gray-400 ${isDarkBackground ? "bg-stone-700" : "bg-stone-900"}`;

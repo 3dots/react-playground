@@ -39,7 +39,7 @@ export function useIntl() {
   const { formatMessage, ...rest } = useReactIntl();
 
   // Re-write the formatMessage function but with a strongly-typed id.
-  const typedFormatMessage : TypedFormatMessage = (
+  const typedFormatMessage: TypedFormatMessage = (
     descriptor: FormatMessageArgs[0] & {
       id?: IntlMessageKeys;
     },

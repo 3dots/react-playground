@@ -5,8 +5,14 @@ import { FormattedMessage, useIntl } from "../Common/Intl/Intl";
 import { RInput } from "../Common/RInput/RInput";
 import { RTextArea } from "../Common/RTextArea/RTextArea";
 import { RH1 } from "../Common/RH/RH";
-import { useEffect, useRef, useState } from "react";
-import { UsProject } from "@/store/model/UsProject";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+
+type ProjectFormInputs = {
+  title: string;
+  description: string;
+};
 
 export function AddProject() {
   const cancelAddProjectAction = useProjectsStore(
@@ -14,35 +20,31 @@ export function AddProject() {
   );
   const project = useProjectsStore(sw => sw.state.project);
 
-  const intl = useIntl();
-  const [validationMessage, setValidationMessage] = useState("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ProjectFormInputs>();
 
-  const titleInputElRef = useRef<HTMLInputElement>(null);
-  const descTextAreaElRef = useRef<HTMLTextAreaElement>(null);
+  const intl = useIntl();
 
   useEffect(() => {
-    if (!titleInputElRef.current || !descTextAreaElRef.current) return;
-    titleInputElRef.current.value = project.title;
-    descTextAreaElRef.current.value = project.description;
-    setValidationMessage("");
-  }, [project]);
+    console.log("effect ran");
+    reset(project);
+  }, [project, reset]);
 
-  const handleSave = () => {
-    if (!titleInputElRef.current || !descTextAreaElRef.current) return;
-
-    const newProject = new UsProject({
-      title: titleInputElRef.current.value,
-      description: descTextAreaElRef.current.value,
-    });
-
-    // if (newProject.title.trim() === "") {
-
-    // }
-
+  const handleSave: SubmitHandler<ProjectFormInputs> = data => {
+    console.log(data);
+    //const newProject = new UsProject(data);
   };
 
   return (
-    <div className={`${cssClasses.container} mx-auto flex flex-col gap-2`}>
+    <form
+      className={`${cssClasses.container} mx-auto flex flex-col gap-2`}
+      onSubmit={handleSubmit(handleSave)}
+      noValidate
+    >
       <div className="flex">
         <RH1 isDefaultMB={false}>
           <FormattedMessage id="ttl.adding.new.project" />
@@ -54,18 +56,39 @@ export function AddProject() {
           >
             <FormattedMessage id="btn.cancel" />
           </RButton>
-          <RButton onClick={handleSave}>
+          <RButton type="submit">
             <FormattedMessage id="btn.save" />
           </RButton>
         </div>
       </div>
-      {validationMessage !== "" && <div>{validationMessage}</div>}
-      <RInput ref={titleInputElRef} required>
+      <RInput
+        {...register("title", {
+          required: intl.formatMessage(
+            { id: "txt.is.empty" },
+            { label: intl.formatMessage({ id: "lbl.title" }) },
+          ),
+          maxLength: {
+            value: 10,
+            message: "Too long"
+          }
+        })}
+        isValid={errors.title}
+      >
         <FormattedMessage id="lbl.title" />
       </RInput>
-      <RTextArea ref={descTextAreaElRef} required>
+      {errors.title?.message}
+      <RTextArea
+        {...register("description", { required: true })}
+        isValid={errors.description === undefined}
+      >
         <FormattedMessage id="lbl.description" />
       </RTextArea>
-    </div>
+      {errors.description && (
+        <FormattedMessage
+          id="txt.is.empty"
+          values={{ label: intl.formatMessage({ id: "lbl.description" }) }}
+        />
+      )}
+    </form>
   );
 }

@@ -1,5 +1,8 @@
 import type { PersistStorage } from "zustand/middleware";
-import { ManageProjectsState, type IManageProjectsStateWrapper } from "./model/ManageProjectsState";
+import {
+  ManageProjectsState,
+  type IManageProjectsStateWrapper,
+} from "./model/ManageProjectsState";
 
 export const persistStorage: PersistStorage<IManageProjectsStateWrapper> = {
   getItem: name => {
@@ -16,8 +19,7 @@ export const persistStorage: PersistStorage<IManageProjectsStateWrapper> = {
       };
       //console.log(result);
       return result;
-    }
-    catch {
+    } catch {
       return null;
     }
   },

@@ -9,17 +9,19 @@ export function MainContent() {
   const isSplashScreen = useProjectsStore(sw => sw.state.isSplashScreen);
   const resetState = useProjectsStore(sw => sw.resetState);
 
-  const MainRender = function() {
+  const MainRender = function () {
     if (isAddingProject) return <AddProject />;
     else if (isSplashScreen) return <SplashScreen />;
     else return <></>;
-  }
+  };
 
   return (
     <>
       <MainRender />
       <div className="mt-auto">
-        <RButton onClick={resetState}><FormattedMessage id="btn.reset" /></RButton>
+        <RButton onClick={resetState}>
+          <FormattedMessage id="btn.reset" />
+        </RButton>
       </div>
     </>
   );

@@ -5,7 +5,7 @@ import { RButton } from "../Common/RButton/RButton";
 import { RH1 } from "../Common/RH/RH";
 
 export function SplashScreen() {
-  const addProjectAction = useProjectsStore(sw => sw.beginAddProjectAction);  
+  const addProjectAction = useProjectsStore(sw => sw.beginAddProjectAction);
   const intl = useIntl();
 
   return (

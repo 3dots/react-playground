@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { IManageProjectsStateWrapper} from "./model/ManageProjectsState";
+import type { IManageProjectsStateWrapper } from "./model/ManageProjectsState";
 import { ManageProjectsState } from "./model/ManageProjectsState";
 import { persistStorage } from "./persistStorage";
 
