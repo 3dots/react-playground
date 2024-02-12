@@ -4,18 +4,44 @@ export interface IManageProjectsStateWrapper {
   state: ManageProjectsState;
   resetState: () => void;
   beginAddProjectAction: () => void;
-  cancelAddProjectAction: () => void;
+  cancelAddEditProjectAction: () => void;
   addProjectAction: (newProject: UsProject) => void;
+  beginEditProjectAction: () => void;
+  editProjectAction: (
+    currentProject: UsProject,
+    editedProject: UsProject,
+  ) => void;
+  deleteProjectAction: (currentProject: UsProject) => void;
+  selectProjectAction: (index: number) => void;
 }
 
 export class ManageProjectsState {
-  isSplashScreen: boolean = true;
+  selectedIndex: number | null = null;
   isAddingNewProject: boolean = false;
+  isEditingProject: boolean = false;
   project: UsProject = new UsProject();
   projects: UsProject[] = [];
 
   public constructor(init?: Partial<ManageProjectsState>) {
     Object.assign(this, init);
+    if (
+      !this.isAddingNewProject &&
+      !this.isEditingProject &&
+      this.selectedIndex !== null &&
+      this.selectedIndex >= 0 &&
+      this.selectedIndex < this.projects.length
+    ) {
+      this.project = this.projects[this.selectedIndex];
+    }
+  }
+
+  toLocalStorage(): Partial<ManageProjectsState> {
+    return {
+      ...this,
+      isAddingNewProject: undefined,
+      isEditingProject: undefined,
+      project: undefined,
+    };
   }
 
   static initialState(): ManageProjectsState {
@@ -23,27 +49,89 @@ export class ManageProjectsState {
   }
 
   beginAddProjectAction(): ManageProjectsState {
-    return new ManageProjectsState({ ...this, isAddingNewProject: true, project: new UsProject() });
+    return new ManageProjectsState({
+      ...this,
+      isAddingNewProject: true,
+      project: new UsProject(),
+    });
   }
 
-  cancelAddProjectAction(): ManageProjectsState {
-    return new ManageProjectsState({ ...this, isAddingNewProject: false });
+  cancelAddEditProjectAction(): ManageProjectsState {
+    return new ManageProjectsState({
+      ...this,
+      isAddingNewProject: false,
+      isEditingProject: false,
+    });
   }
 
   isDuplicate: (title: string) => boolean = (title: string) => {
     title = title.trim();
     if (!title) return false;
-    if (this.isAddingNewProject) return this.projects.some(x => x.title === title);
-    const projectsOtherThanThisOne = this.projects.filter(x => x.title !== this.project.title);
+    if (this.isAddingNewProject)
+      return this.projects.some(x => x.title === title);
+    const projectsOtherThanThisOne = this.projects.filter(
+      x => x.title !== this.project.title,
+    );
     return projectsOtherThanThisOne.some(x => x.title === title);
-  }
+  };
 
   addProjectAction(newProject: UsProject): ManageProjectsState {
     return new ManageProjectsState({
       ...this,
       projects: [...this.projects, newProject],
-      project: newProject,
       isAddingNewProject: false,
+      selectedIndex: this.projects.length,
+    });
+  }
+
+  beginEditProjectAction(): ManageProjectsState {
+    return new ManageProjectsState({
+      ...this,
+      isEditingProject: true,
+    });
+  }
+
+  editProjectAction(
+    currentProject: UsProject,
+    editedProject: UsProject,
+  ): ManageProjectsState {
+    const newArray: UsProject[] = [];
+    for (const p of this.projects) {
+      if (p.title === currentProject.title) {
+        newArray.push(editedProject);
+      } else {
+        newArray.push(p);
+      }
+    }
+    return new ManageProjectsState({
+      ...this,
+      projects: newArray,
+      isEditingProject: false,
+    });
+  }
+
+  deleteProjectAction(currentProject: UsProject): ManageProjectsState {
+    const newArray: UsProject[] = [];
+    for (const p of this.projects) {
+      if (p.title !== currentProject.title) {
+        newArray.push(p);
+      }
+    }
+    return new ManageProjectsState({
+      ...this,
+      projects: newArray,
+      selectedIndex: null,
+    });
+  }
+
+  selectProjectAction(index: number): ManageProjectsState {
+    if (index < 0 || index >= this.projects.length) return this;
+    return new ManageProjectsState({
+      ...this,
+      selectedIndex: index,
+      isAddingNewProject: false,
+      isEditingProject: false,
+      project: this.projects[index],
     });
   }
 }

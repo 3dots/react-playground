@@ -11,11 +11,11 @@ import { useEffect } from "react";
 import { UsProject } from "@/store/model/UsProject";
 import {
   RDatePicker,
+  formatDate,
   parseDate,
   validateDatePicker,
 } from "../Common/RDatePicker/RDatePicker";
-import { validateRequired } from "../Common/Common";
-
+import { validateRequired } from "../Common/common";
 type ProjectFormInputs = {
   title: string;
   description: string;
@@ -23,13 +23,21 @@ type ProjectFormInputs = {
 };
 
 export function AddProject() {
-  const [project, cancelAddProjectAction, isDuplicate, addProjectAction] =
-    useProjectsStore(sw => [
-      sw.state.project,
-      sw.cancelAddProjectAction,
-      sw.state.isDuplicate,
-      sw.addProjectAction,
-    ]);
+  const [
+    project,
+    isAddingNewProject,
+    cancelAddProjectAction,
+    addProjectAction,
+    editProjectAction,
+    state,
+  ] = useProjectsStore(sw => [
+    sw.state.project,
+    sw.state.isAddingNewProject,
+    sw.cancelAddEditProjectAction,
+    sw.addProjectAction,
+    sw.editProjectAction,
+    sw.state
+  ]);
 
   const {
     register,
@@ -41,13 +49,12 @@ export function AddProject() {
   const intl = useIntl();
 
   useEffect(() => {
-    console.log("effect ran");
     reset({
       title: project.title,
       description: project.description,
-      dueDate: "",
+      dueDate: formatDate(project.dueDate, intl.formatMessage),
     });
-  }, [project, reset]);
+  }, [project, reset, intl]);
 
   const handleSave: SubmitHandler<ProjectFormInputs> = data => {
     const newProject = new UsProject({
@@ -55,7 +62,9 @@ export function AddProject() {
       description: data.description.trim(),
       dueDate: parseDate(data.dueDate, intl.formatMessage),
     });
-    addProjectAction(newProject);
+
+    if (isAddingNewProject) addProjectAction(newProject);
+    else editProjectAction(project, newProject);
   };
 
   const titleErrorId = "title-error";
@@ -67,16 +76,29 @@ export function AddProject() {
   const dueDateErrorId = "due-date-error";
   const dueDateLabelResourceId = "lbl.due.date";
 
+  const HeadingText = function () {
+    if (isAddingNewProject)
+      return <FormattedMessage id="ttl.adding.new.project" />;
+    else
+      return (
+        <FormattedMessage
+          id="ttl.editing.project"
+          values={{ title: project.title }}
+        />
+      );
+  };
+
   return (
     <div className="flex w-100">
       <form
         className={`${cssClasses.form} flex mx-auto flex-col gap-2`}
         onSubmit={handleSubmit(handleSave)}
         noValidate
+        autoComplete="off"
       >
         <div className="flex">
           <RH1 isDefaultMB={false}>
-            <FormattedMessage id="ttl.adding.new.project" />
+            <HeadingText />
           </RH1>
           <div className="ml-auto flex gap-2">
             <RButton
@@ -97,7 +119,7 @@ export function AddProject() {
               required: s =>
                 validateRequired(s, intl.formatMessage, titleLabelResourceId),
               isNotDuplicate: s =>
-                isDuplicate(s)
+                state.isDuplicate(s)
                   ? intl.formatMessage({ id: "txt.project.exists" })
                   : true,
             },

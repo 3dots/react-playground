@@ -1,5 +1,5 @@
 import { forwardRef, type PropsWithChildren } from "react";
-import type { TypedFormatMessage} from "../Intl/Intl";
+import type { TypedFormatMessage } from "../Intl/Intl";
 import { useIntl } from "../Intl/Intl";
 import classNames from "./RDatePicker.module.css";
 import moment from "moment";
@@ -52,7 +52,10 @@ export const RDatePicker = forwardRef(
               placeholder={intl.formatMessage({ id: "txt.date.format" })}
               maxLength={dateFormatMaxLength(intl.locale)}
             />
-            <svg fill="currentColor" className={`h-7 w-7 p-1 ${classNames["icon-mt"]}`}>
+            <svg
+              fill="currentColor"
+              className={`h-7 w-7 p-1 ${classNames["icon-mt"]}`}
+            >
               <use xlinkHref="bootstrap-icons-custom.svg#calendar-event" />
             </svg>
           </span>
@@ -66,10 +69,20 @@ function myMoment(s: string, formatMessage: TypedFormatMessage) {
   return moment(s, formatMessage({ id: "moment.date.format" }), true);
 }
 
-export function validateDatePicker(s: string, formatMessage: TypedFormatMessage) {
-  return myMoment(s, formatMessage).isValid() ? true : formatMessage({ id: "txt.bad.date.format" });
+export function validateDatePicker(
+  s: string,
+  formatMessage: TypedFormatMessage,
+) {
+  return myMoment(s, formatMessage).isValid()
+    ? true
+    : formatMessage({ id: "txt.bad.date.format" });
 }
 
 export function parseDate(s: string, formatMessage: TypedFormatMessage) {
   return myMoment(s, formatMessage).toDate();
+}
+
+export function formatDate(date: Date, formatMessage: TypedFormatMessage) {
+  if (!date) return "";
+  return moment(date).format(formatMessage({ id: "moment.date.format" }));
 }

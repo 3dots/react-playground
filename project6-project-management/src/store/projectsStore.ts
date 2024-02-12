@@ -12,14 +12,28 @@ export const useProjectsStore = create<IManageProjectsStateWrapper>()(
         set(() => ({ state: ManageProjectsState.initialState() })),
       beginAddProjectAction: () =>
         set(sw => ({ state: sw.state.beginAddProjectAction() })),
-      cancelAddProjectAction: () =>
-        set(sw => ({ state: sw.state.cancelAddProjectAction() })),
+      cancelAddEditProjectAction: () =>
+        set(sw => ({ state: sw.state.cancelAddEditProjectAction() })),
       addProjectAction: newProject =>
         set(sw => ({ state: sw.state.addProjectAction(newProject) })),
+      beginEditProjectAction: () =>
+        set(sw => ({ state: sw.state.beginEditProjectAction() })),
+      editProjectAction: (currentProject, editedProject) =>
+        set(sw => ({
+          state: sw.state.editProjectAction(currentProject, editedProject),
+        })),
+      deleteProjectAction: currentProject =>
+        set(sw => ({ state: sw.state.deleteProjectAction(currentProject) })),
+      selectProjectAction: index =>
+        set(sw => ({ state: sw.state.selectProjectAction(index) })),
     }),
     {
       name: "projects-storage",
       storage: persistStorage,
+      partialize: sw =>
+        ({
+          state: { ...sw.state.toLocalStorage() },
+        }) as unknown as IManageProjectsStateWrapper,
     },
   ),
 );
