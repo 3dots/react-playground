@@ -14,6 +14,8 @@ export const useProjectsStore = create<IManageProjectsStateWrapper>()(
         set(sw => ({ state: sw.state.beginAddProjectAction() })),
       cancelAddProjectAction: () =>
         set(sw => ({ state: sw.state.cancelAddProjectAction() })),
+      addProjectAction: newProject =>
+        set(sw => ({ state: sw.state.addProjectAction(newProject) })),
     }),
     {
       name: "projects-storage",

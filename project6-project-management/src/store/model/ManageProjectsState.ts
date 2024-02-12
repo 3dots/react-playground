@@ -5,11 +5,12 @@ export interface IManageProjectsStateWrapper {
   resetState: () => void;
   beginAddProjectAction: () => void;
   cancelAddProjectAction: () => void;
+  addProjectAction: (newProject: UsProject) => void;
 }
 
 export class ManageProjectsState {
   isSplashScreen: boolean = true;
-  isAddingProject: boolean = false;
+  isAddingNewProject: boolean = false;
   project: UsProject = new UsProject();
   projects: UsProject[] = [];
 
@@ -22,15 +23,19 @@ export class ManageProjectsState {
   }
 
   beginAddProjectAction(): ManageProjectsState {
-    return new ManageProjectsState({ ...this, isAddingProject: true });
+    return new ManageProjectsState({ ...this, isAddingNewProject: true, project: new UsProject() });
   }
 
   cancelAddProjectAction(): ManageProjectsState {
-    return new ManageProjectsState({ ...this, isAddingProject: false });
+    return new ManageProjectsState({ ...this, isAddingNewProject: false });
   }
 
-  isDuplicate(newProject: UsProject): boolean {
-    return this.projects.some(x => x.title === newProject.title);
+  isDuplicate: (title: string) => boolean = (title: string) => {
+    title = title.trim();
+    if (!title) return false;
+    if (this.isAddingNewProject) return this.projects.some(x => x.title === title);
+    const projectsOtherThanThisOne = this.projects.filter(x => x.title !== this.project.title);
+    return projectsOtherThanThisOne.some(x => x.title === title);
   }
 
   addProjectAction(newProject: UsProject): ManageProjectsState {
@@ -38,7 +43,7 @@ export class ManageProjectsState {
       ...this,
       projects: [...this.projects, newProject],
       project: newProject,
-      isAddingProject: false,
+      isAddingNewProject: false,
     });
   }
 }

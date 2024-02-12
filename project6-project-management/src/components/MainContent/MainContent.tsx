@@ -5,9 +5,11 @@ import { RButton } from "../Common/RButton/RButton";
 import { FormattedMessage } from "../Common/Intl/Intl";
 
 export function MainContent() {
-  const isAddingProject = useProjectsStore(sw => sw.state.isAddingProject);
-  const isSplashScreen = useProjectsStore(sw => sw.state.isSplashScreen);
-  const resetState = useProjectsStore(sw => sw.resetState);
+  const [isAddingProject, isSplashScreen, resetState] = useProjectsStore(sw => [
+    sw.state.isAddingNewProject,
+    sw.state.isSplashScreen,
+    sw.resetState,
+  ]);
 
   const MainRender = function () {
     if (isAddingProject) return <AddProject />;

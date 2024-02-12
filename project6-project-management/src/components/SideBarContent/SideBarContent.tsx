@@ -1,10 +1,14 @@
 import { useProjectsStore } from "@/store/projectsStore";
 import { FormattedMessage } from "../Common/Intl/Intl";
 import { RButton } from "../Common/RButton/RButton";
+import type { UsProject } from "@/store/model/UsProject";
 
 export function SideBarContent() {
-  const isAddingProject = useProjectsStore(sw => sw.state.isAddingProject);
-  const addProjectAction = useProjectsStore(sw => sw.beginAddProjectAction);
+  const [isAddingProject, projects, addProjectAction] = useProjectsStore(sw => [
+    sw.state.isAddingNewProject,
+    sw.state.projects,
+    sw.beginAddProjectAction,
+  ]);
 
   return (
     <section className="mt-5">
@@ -16,6 +20,7 @@ export function SideBarContent() {
           <FormattedMessage id="btn.add.project" />
         </RButton>
       )}
+      {projects.map((x: UsProject) => <div>{x.title}</div>)}
     </section>
   );
 }

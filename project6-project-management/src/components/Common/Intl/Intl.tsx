@@ -10,7 +10,7 @@ import type enMessages from "@/translations/en.json";
 import type { FormatXMLElementFn } from "intl-messageformat";
 
 // Our new union type of all available message IDs.
-type IntlMessageKeys = keyof typeof enMessages;
+export type IntlMessageKeys = keyof typeof enMessages;
 
 // The arguments to the original formatMessage function.
 type FormatMessageArgs = Parameters<IntlFormatters["formatMessage"]>;

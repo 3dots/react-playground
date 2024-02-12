@@ -11,5 +11,9 @@
   "lbl.due.date": "Due date",
   "img.tasks": "Tasks image",
   "txt.select.project.or": "Select a project or get started with a new one.",
-  "txt.is.empty": "{label} is required."
+  "txt.is.empty": "{label} is required",
+  "txt.date.format": "M.dd.yyyy",
+  "txt.bad.date.format": "The expected date format is: M.dd.yyyy",
+  "txt.project.exists": "Project with that title already exists",
+  "moment.date.format": "M.DD.YYYY"
 }
