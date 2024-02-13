@@ -86,7 +86,7 @@ export class ManageProjectsState {
       x => x.title !== this.project.title,
     );
     return projectsOtherThanThisOne.some(x => x.title === title);
-  };
+  }
 
   addProjectAction(newProject: UsProject): ManageProjectsState {
     return new ManageProjectsState({
@@ -157,7 +157,9 @@ export class ManageProjectsState {
   deleteTask(project: UsProject, taskToDelete: UsTask): ManageProjectsState {
     const projectInList = this.projects.find(x => x.title === project.title);
     if (!projectInList) return this;
-    projectInList.tasks = projectInList.tasks.filter(x => x.text !== taskToDelete.text);
+    projectInList.tasks = projectInList.tasks.filter(
+      x => x.text !== taskToDelete.text,
+    );
     return new ManageProjectsState({ ...this });
   }
 }

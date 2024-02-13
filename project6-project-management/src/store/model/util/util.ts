@@ -1,5 +1,7 @@
-
-export function assignArrayDirectlyIfTyped<T>(constructorListParameter: T[] | undefined, constructor:{new (init: Partial<T>):T}) : T[] {
+export function assignArrayDirectlyIfTyped<T>(
+  constructorListParameter: T[] | undefined,
+  constructor: { new (init: Partial<T>): T },
+): T[] {
   if (constructorListParameter) {
     const newArray = [];
     let isOkToAssignDirectly = true;

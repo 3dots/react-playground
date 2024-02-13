@@ -35,7 +35,7 @@ export function AddProject() {
     sw.cancelAddEditProjectAction,
     sw.addProjectAction,
     sw.editProjectAction,
-    sw.state
+    sw.state,
   ]);
 
   const {

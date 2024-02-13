@@ -51,10 +51,7 @@ export const RDatePicker = forwardRef(
               placeholder={intl.formatMessage({ id: "txt.date.format" })}
               maxLength={dateFormatMaxLength(intl.locale)}
             />
-            <svg
-              fill="currentColor"
-              className="h-7 w-7 p-1 mt-[0.185rem]"
-            >
+            <svg fill="currentColor" className="h-7 w-7 p-1 mt-[0.185rem]">
               <use xlinkHref="bootstrap-icons-custom.svg#calendar-event" />
             </svg>
           </span>
