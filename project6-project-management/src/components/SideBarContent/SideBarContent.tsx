@@ -42,17 +42,23 @@ export function SideBarContent() {
           <FormattedMessage id="btn.add.project" />
         </RButton>
       )}
-      <div className="flex flex-col gap-1">
+      <ul className="flex flex-col gap-1">
         {projects.map((x: UsProject, index: number) => (
-          <RA
-            key={x.title}
-            onClick={e => handleLinkClick(e, index)}
-            className={index === selectedIndex ? "bg-stone-400 cursor-default pointer-events-none" : undefined}
-          >
-            {x.title}
-          </RA>
+          <li>
+            <RA
+              key={x.title}
+              onClick={e => handleLinkClick(e, index)}
+              className={`w-full inline-block ${
+                index === selectedIndex
+                  ? "bg-stone-400 cursor-default pointer-events-none"
+                  : ""
+              }`}
+            >
+              {x.title}
+            </RA>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
