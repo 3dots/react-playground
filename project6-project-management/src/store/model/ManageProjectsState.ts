@@ -42,8 +42,7 @@ export class ManageProjectsState {
       this.project = this.projects[this.selectedIndex];
     } else if (project instanceof UsProject) {
       this.project = project;
-    }
-    else {
+    } else if (project) {
       this.project = new UsProject(project);
     }
     console.log(this.isAddingNewProject);
