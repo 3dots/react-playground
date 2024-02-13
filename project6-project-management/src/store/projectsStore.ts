@@ -26,6 +26,10 @@ export const useProjectsStore = create<IManageProjectsStateWrapper>()(
         set(sw => ({ state: sw.state.deleteProjectAction(currentProject) })),
       selectProjectAction: index =>
         set(sw => ({ state: sw.state.selectProjectAction(index) })),
+      addTask: (project, newTask) =>
+        set(sw => ({ state: sw.state.addTask(project, newTask) })),
+      deleteTask: (project, taskToDelete) =>
+        set(sw => ({ state: sw.state.deleteTask(project, taskToDelete) })),
     }),
     {
       name: "projects-storage",

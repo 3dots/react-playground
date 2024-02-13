@@ -1,4 +1,6 @@
 import { UsProject } from "./UsProject";
+import type { UsTask } from "./UsTask";
+import { assignArrayDirectlyIfTyped } from "./util/util";
 
 export interface IManageProjectsStateWrapper {
   state: ManageProjectsState;
@@ -13,6 +15,8 @@ export interface IManageProjectsStateWrapper {
   ) => void;
   deleteProjectAction: (currentProject: UsProject) => void;
   selectProjectAction: (index: number) => void;
+  addTask: (project: UsProject, newTask: UsTask) => void;
+  deleteTask: (project: UsProject, taskToDelete: UsTask) => void;
 }
 
 export class ManageProjectsState {
@@ -23,7 +27,11 @@ export class ManageProjectsState {
   projects: UsProject[] = [];
 
   public constructor(init?: Partial<ManageProjectsState>) {
-    Object.assign(this, init);
+    const { project, projects, ...rest } = { ...init };
+    Object.assign(this, rest);
+
+    this.projects = assignArrayDirectlyIfTyped(projects, UsProject);
+
     if (
       !this.isAddingNewProject &&
       !this.isEditingProject &&
@@ -32,6 +40,11 @@ export class ManageProjectsState {
       this.selectedIndex < this.projects.length
     ) {
       this.project = this.projects[this.selectedIndex];
+    } else if (project instanceof UsProject) {
+      this.project = project;
+    }
+    else {
+      this.project = new UsProject(project);
     }
   }
 
@@ -131,7 +144,20 @@ export class ManageProjectsState {
       selectedIndex: index,
       isAddingNewProject: false,
       isEditingProject: false,
-      project: this.projects[index],
     });
+  }
+
+  addTask(project: UsProject, newTask: UsTask): ManageProjectsState {
+    const projectInList = this.projects.find(x => x.title === project.title);
+    if (!projectInList) return this;
+    projectInList.tasks = [...projectInList.tasks, newTask];
+    return new ManageProjectsState({ ...this });
+  }
+
+  deleteTask(project: UsProject, taskToDelete: UsTask): ManageProjectsState {
+    const projectInList = this.projects.find(x => x.title === project.title);
+    if (!projectInList) return this;
+    projectInList.tasks = projectInList.tasks.filter(x => x.text !== taskToDelete.text);
+    return new ManageProjectsState({ ...this });
   }
 }

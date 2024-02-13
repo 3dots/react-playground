@@ -2,6 +2,7 @@ import { forwardRef, type PropsWithChildren } from "react";
 
 export interface RInputProps extends React.ComponentProps<"input"> {
   isValid: boolean;
+  labelClassName?: string;
 }
 
 export const RInput = forwardRef(
@@ -14,6 +15,7 @@ export const RInput = forwardRef(
       children,
       isValid,
       "aria-invalid": ariaInvalid,
+      labelClassName: labelClassNameProp,
       ...rest
     } = { ...props };
 
@@ -24,8 +26,11 @@ export const RInput = forwardRef(
       : " border-red-600 focus:outline-2 focus:outline-red-600 focus:outline neg-outline";
     if (classNameProp) className += ` ${classNameProp}`;
 
+    let labelClassName = "flex flex-col gap-1 min-w-0";
+    if (labelClassNameProp) labelClassName += ` ${labelClassNameProp}`;
+
     return (
-      <label className="flex flex-col gap-1">
+      <label className={labelClassName}>
         {children !== undefined && <span>{children}</span>}
         <input
           ref={ref}
