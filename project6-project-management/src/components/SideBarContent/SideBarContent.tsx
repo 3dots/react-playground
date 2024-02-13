@@ -6,13 +6,19 @@ import { RA } from "../Common/RA/RA";
 import { RH2 } from "../Common/RH/RH";
 
 export function SideBarContent() {
-  const [isAddingProject, projects, addProjectAction, selectProjectAction] =
-    useProjectsStore(sw => [
-      sw.state.isAddingNewProject,
-      sw.state.projects,
-      sw.beginAddProjectAction,
-      sw.selectProjectAction,
-    ]);
+  const [
+    isAddingProject,
+    projects,
+    selectedIndex,
+    addProjectAction,
+    selectProjectAction,
+  ] = useProjectsStore(sw => [
+    sw.state.isAddingNewProject,
+    sw.state.projects,
+    sw.state.selectedIndex,
+    sw.beginAddProjectAction,
+    sw.selectProjectAction,
+  ]);
 
   const handleLinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -36,9 +42,13 @@ export function SideBarContent() {
           <FormattedMessage id="btn.add.project" />
         </RButton>
       )}
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-1">
         {projects.map((x: UsProject, index: number) => (
-          <RA key={x.title} onClick={e => handleLinkClick(e, index)}>
+          <RA
+            key={x.title}
+            onClick={e => handleLinkClick(e, index)}
+            className={index === selectedIndex ? "bg-stone-400 cursor-default pointer-events-none" : undefined}
+          >
             {x.title}
           </RA>
         ))}
