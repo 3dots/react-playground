@@ -3,7 +3,6 @@ import { forwardRef, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 import { EnButtonType, RButton } from "../RButton/RButton";
 import { FormattedMessage } from "../Intl/Intl";
-import cssClasses from "./ConfirmDialog.module.css";
 
 export interface IConfirmDialogProps {
   onCancel?: () => void;
@@ -29,7 +28,7 @@ export const ConfirmDialog = forwardRef<
 
   return createPortal(
     <dialog ref={dialogElRef} className="rounded">
-      <div className={`${cssClasses.dialog} flex flex-col gap-2 p-2`}>
+      <div className="min-w-[15rem] flex flex-col gap-2 p-2">
         <div>{children}</div>
         <form method="dialog" className="flex gap-2 ml-auto">
           <RButton buttonType={EnButtonType.Secondary} onClick={props.onCancel}>

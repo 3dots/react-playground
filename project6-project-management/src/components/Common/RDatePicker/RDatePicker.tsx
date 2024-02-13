@@ -1,7 +1,6 @@
 import { forwardRef, type PropsWithChildren } from "react";
 import type { TypedFormatMessage } from "../Intl/Intl";
 import { useIntl } from "../Intl/Intl";
-import classNames from "./RDatePicker.module.css";
 import moment from "moment";
 
 export interface RInputProps extends React.ComponentProps<"input"> {
@@ -35,7 +34,7 @@ export const RDatePicker = forwardRef(
       ? " border-stone-300 focus-within:border-stone-600 focus-within:outline-none"
       : " border-red-600 focus-within:outline-2 focus-within:outline-red-600 focus-within:outline neg-outline";
 
-    let className = `py-1 pl-2 ${classNames["input-width-en"]} bg-transparent outline-none`;
+    let className = `py-1 pl-2 w-[5.4rem] bg-transparent outline-none`;
     if (classNameProp) className += ` ${classNameProp}`;
 
     return (
@@ -54,7 +53,7 @@ export const RDatePicker = forwardRef(
             />
             <svg
               fill="currentColor"
-              className={`h-7 w-7 p-1 ${classNames["icon-mt"]}`}
+              className="h-7 w-7 p-1 mt-[0.185rem]"
             >
               <use xlinkHref="bootstrap-icons-custom.svg#calendar-event" />
             </svg>

@@ -9,7 +9,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { formatDate } from "../Common/RDatePicker/RDatePicker";
 import { RInput } from "../Common/RInput/RInput";
-import cssClasses from "./ViewProject.module.css";
 import { UsTask } from "@/store/model/UsTask";
 
 export function ViewProject() {
@@ -66,7 +65,7 @@ export function ViewProject() {
       <div className="flex gap-2 items-center mb-2 flex-wrap min-w-0">
         <RInput
           value={newTaskText}
-          labelClassName={cssClasses["tasks-input"]}
+          labelClassName="w-[300px]"
           isValid={true}
           onChange={e => setNewTaskText(e.target.value)}
         />

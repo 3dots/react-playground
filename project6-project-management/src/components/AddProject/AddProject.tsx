@@ -1,5 +1,4 @@
 import { useProjectsStore } from "@/store/projectsStore";
-import cssClasses from "./AddProject.module.css";
 import { EnButtonType, RButton } from "../Common/RButton/RButton";
 import { FormattedMessage, useIntl } from "../Common/Intl/Intl";
 import { RInput } from "../Common/RInput/RInput";
@@ -91,7 +90,7 @@ export function AddProject() {
   return (
     <div className="flex w-100">
       <form
-        className={`${cssClasses.form} flex mx-auto flex-col gap-2`}
+        className="w-[500px] flex mx-auto flex-col gap-2"
         onSubmit={handleSubmit(handleSave)}
         noValidate
         autoComplete="off"
