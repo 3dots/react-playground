@@ -46,6 +46,7 @@ export class ManageProjectsState {
     else {
       this.project = new UsProject(project);
     }
+    console.log(this.isAddingNewProject);
   }
 
   toLocalStorage(): Partial<ManageProjectsState> {
@@ -77,7 +78,7 @@ export class ManageProjectsState {
     });
   }
 
-  isDuplicate: (title: string) => boolean = (title: string) => {
+  isDuplicate(title: string) {
     title = title.trim();
     if (!title) return false;
     if (this.isAddingNewProject)
