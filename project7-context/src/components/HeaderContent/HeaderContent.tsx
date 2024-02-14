@@ -5,8 +5,8 @@ import { CartCtx } from "@/store/CartCtx";
 
 export function HeaderContent() {
   const modal = useRef<ICartModalHandle>(null);
-  const { state } = useContext(CartCtx);
-  const cartQuantity = state.items.length;
+  const { cart } = useContext(CartCtx);
+  const cartQuantity = cart.items.length;
 
   let modalActions = <button>Close</button>;
   if (cartQuantity > 0) {

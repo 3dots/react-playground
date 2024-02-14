@@ -5,10 +5,10 @@ import { CartCtx } from "./store/CartCtx";
 import { CartState } from "./store/model/CartState";
 
 export function App() {
-  const [state, setState] = useState(CartState.initialState());
+  const [cart, setCart] = useState(CartState.initialState());
 
   return (
-    <CartCtx.Provider value={{ state, setState }}>
+    <CartCtx.Provider value={{ cart, setCart }}>
       <header id="main-header">
         <HeaderContent />
       </header>

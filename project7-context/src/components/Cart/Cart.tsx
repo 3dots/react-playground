@@ -2,8 +2,8 @@ import { CartCtx } from "@/store/CartCtx";
 import { useContext } from "react";
 
 export function Cart() {
-  const { state, setState } = useContext(CartCtx);
-  const items = state.items;
+  const { cart, setCart } = useContext(CartCtx);
+  const items = cart.items;
 
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -26,11 +26,11 @@ export function Cart() {
                   <span> ({formattedPrice})</span>
                 </div>
                 <div className="cart-item-actions">
-                  <button onClick={() => setState(state.updateCartItemQuantity(item.id, -1))}>
+                  <button onClick={() => setCart(cart.updateCartItemQuantity(item.id, -1))}>
                     -
                   </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => setState(state.updateCartItemQuantity(item.id, 1))}>
+                  <button onClick={() => setCart(cart.updateCartItemQuantity(item.id, 1))}>
                     +
                   </button>
                 </div>

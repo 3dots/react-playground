@@ -7,7 +7,7 @@ export interface IProductProps {
 }
 
 export function Product(props: IProductProps) {
-  const { state, setState } = useContext(CartCtx);
+  const { cart, setCart } = useContext(CartCtx);
   const p = props.product;
 
   return (
@@ -20,7 +20,7 @@ export function Product(props: IProductProps) {
           <p>{p.description}</p>
         </div>
         <p className='product-actions'>
-          <button onClick={() => setState(state.addItemToCart(p.id))}>Add to Cart</button>
+          <button onClick={() => setCart(cart.addItemToCart(p.id))}>Add to Cart</button>
         </p>
       </div>
     </article>
