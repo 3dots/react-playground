@@ -3,7 +3,10 @@ import { FormattedMessage } from "./components/Intl/Intl";
 import { useTestStore } from "./store/testStore";
 
 export function App() {
-  const { state, increaseCountAction } = useTestStore();
+  const [state, increaseCountAction] = useTestStore(sw => [
+    sw.state,
+    sw.increaseCountAction,
+  ]);
 
   return (
     <>

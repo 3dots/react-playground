@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  display: block;
+}
+
+.fix-button-text {
+  margin-top: -2.5px;
+}
+
+.neg-outline {
+  outline-offset: -1px;
+}
