@@ -45,7 +45,6 @@ export class ManageProjectsState {
     } else if (project) {
       this.project = new UsProject(project);
     }
-    console.log(this.isAddingNewProject);
   }
 
   toLocalStorage(): Partial<ManageProjectsState> {

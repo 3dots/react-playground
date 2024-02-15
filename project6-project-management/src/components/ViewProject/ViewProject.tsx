@@ -10,31 +10,20 @@ import { useEffect, useRef, useState } from "react";
 import { formatDate } from "../Common/RDatePicker/RDatePicker";
 import { RInput } from "../Common/RInput/RInput";
 import { UsTask } from "@/store/model/UsTask";
+import { EditTasks } from "../EditTasks/EditTasks";
 
 export function ViewProject() {
   const [
     project,
-    tasks,
     beginEditProjectAction,
     deleteProjectAction,
-    addTask,
-    deleteTask,
   ] = useProjectsStore(sw => [
     sw.state.project,
-    sw.state.project.tasks,
     sw.beginEditProjectAction,
     sw.deleteProjectAction,
-    sw.addTask,
-    sw.deleteTask,
   ]);
   const confirmDialogRef = useRef<IConfirmDialogHandle>(null);
   const intl = useIntl();
-
-  const [newTaskText, setNewTaskText] = useState("");
-
-  useEffect(() => {
-    setNewTaskText("");
-  }, [project]);
 
   const sectionClassName = "flex flex-col gap-2 min-w-0 mb-2";
 
@@ -64,41 +53,7 @@ export function ViewProject() {
         </div>
       </section>
       <section className={sectionClassName}>
-        <RH2>
-          <FormattedMessage id="ttl.tasks" />
-        </RH2>
-        <div className="flex gap-2 items-center mb-2 flex-wrap min-w-0">
-          <RInput
-            value={newTaskText}
-            labelClassName="w-[300px]"
-            isValid={true}
-            onChange={e => setNewTaskText(e.target.value)}
-          />
-          <RButton
-            disabled={newTaskText.trim() ? undefined : true}
-            buttonType={EnButtonType.Secondary}
-            onClick={() =>
-              addTask(project, new UsTask({ text: newTaskText.trim() }))
-            }
-          >
-            <FormattedMessage id="btn.add.task" />
-          </RButton>
-        </div>
-        <ul className="flex flex-col gap-1 bg-stone-200">
-          {tasks.map((x: UsTask) => (
-            <li className="flex px-2 items-center">
-              <div>{x.text}</div>
-              <div className="ml-auto">
-                <RButton
-                  buttonType={EnButtonType.Secondary}
-                  onClick={() => deleteTask(project, x)}
-                >
-                  <FormattedMessage id="btn.delete" />
-                </RButton>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <EditTasks />
       </section>
 
       <ConfirmDialog
