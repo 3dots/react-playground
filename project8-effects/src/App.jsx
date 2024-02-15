@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, React } from 'react';
 
 import Places from './components/Places.jsx';
 import { AVAILABLE_PLACES } from './data.js';
@@ -7,27 +7,43 @@ import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import { sortPlacesByDistance } from "./loc.js"
 
+const STORAGE_KEY = "storage";
+function initPickedPlaces() {
+  const json = localStorage.getItem(STORAGE_KEY);
+  if (!json) return [];
+  try {
+    const ids = JSON.parse(json);
+    return ids.map(x => AVAILABLE_PLACES.find(p => p.id === x));
+  } catch {
+    return [];
+  }
+}
+
 function App() {
   const modal = useRef();
   const selectedPlace = useRef();
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+
+  const [pickedPlaces, setPickedPlaces] = useState(initPickedPlaces());
   const [availablePlaces, setAvailablePlaces] = useState(AVAILABLE_PLACES);
 
   useEffect(() => {
-    console.log("my effect");
     navigator.geolocation.getCurrentPosition((position) => {
       const sortedPlaces = sortPlacesByDistance(AVAILABLE_PLACES, position.coords.latitude, position.coords.longitude);
       setAvailablePlaces(sortedPlaces);
     });
-  }, [navigator]);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(pickedPlaces.map(x => x.id)));
+  }, [pickedPlaces])
 
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    openModal();
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    closeModal();
   }
 
   function handleSelectPlace(id) {
@@ -44,7 +60,37 @@ function App() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
+    closeModal();
+  }
+
+  const delayTimerRef = useRef(null);
+  const confirmDelay = 3000;
+
+  const progressTimerRef = useRef(null);
+  const [timeoutProgress, setTimeoutProgress] = useState(0);
+  const progressRefreshTime = 50;
+
+  function openModal() {
+    modal.current.open();
+    setTimeoutProgress(0);
+    delayTimerRef.current = setTimeout(() => {
+      handleRemovePlace();
+    }, confirmDelay);
+    progressTimerRef.current = setInterval(() => {
+      setTimeoutProgress(x => x + progressRefreshTime);
+    }, progressRefreshTime);
+  }
+
+  function closeModal() {
     modal.current.close();
+    if (delayTimerRef.current) {
+      clearTimeout(delayTimerRef.current);
+      delayTimerRef.current = null;
+    }
+    if (progressTimerRef.current) {
+      clearInterval(progressTimerRef.current);
+      progressTimerRef.current = null;
+    }
   }
 
   return (
@@ -53,6 +99,8 @@ function App() {
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
+          fullTimeout={confirmDelay}
+          timeoutProgress={timeoutProgress}
         />
       </Modal>
 
