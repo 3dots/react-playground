@@ -1,9 +1,9 @@
 import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { App } from "./App.tsx";
 import { IntlProvider } from "react-intl";
 import messages_en from "./translations/en.json";
+import { App } from "./App.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

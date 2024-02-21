@@ -1,13 +1,13 @@
-import { useProjectsStore } from "@/store/projectsStore";
-import { RH1 } from "../Common/RH/RH";
-import { EnButtonType, RButton } from "../Common/RButton/RButton";
-import { FormattedMessage, useIntl } from "../Common/Intl/Intl";
+import { useProjectsStore } from "@/store/projects/projectsStore";
+import { RH1 } from "../../Common/RH/RH";
+import { EnButtonType, RButton } from "../../Common/RButton/RButton";
+import { FormattedMessage, useIntl } from "../../Common/Intl/Intl";
 import {
   ConfirmDialog,
   type IConfirmDialogHandle,
-} from "../Common/ConfirmDialog/ConfirmDialog";
+} from "../../Common/ConfirmDialog/ConfirmDialog";
 import { useRef } from "react";
-import { formatDate } from "../Common/RDatePicker/RDatePicker";
+import { formatDate } from "../../Common/RDatePicker/RDatePicker";
 import { EditTasks } from "../EditTasks/EditTasks";
 
 export function ViewProject() {

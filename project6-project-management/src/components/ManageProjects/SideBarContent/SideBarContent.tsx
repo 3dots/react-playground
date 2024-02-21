@@ -1,9 +1,9 @@
-import { useProjectsStore } from "@/store/projectsStore";
-import { FormattedMessage } from "../Common/Intl/Intl";
-import { RButton } from "../Common/RButton/RButton";
-import type { UsProject } from "@/store/model/UsProject";
-import { RA } from "../Common/RA/RA";
-import { RH2 } from "../Common/RH/RH";
+import { useProjectsStore } from "@/store/projects/projectsStore";
+import { FormattedMessage } from "../../Common/Intl/Intl";
+import { RButton } from "../../Common/RButton/RButton";
+import type { UsProject } from "@/store/projects/model/UsProject";
+import { RA } from "../../Common/RA/RA";
+import { RH2 } from "../../Common/RH/RH";
 
 export function SideBarContent() {
   const [

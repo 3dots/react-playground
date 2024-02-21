@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { FormattedMessage } from "../Common/Intl/Intl";
-import { RH2 } from "../Common/RH/RH";
-import { RInput } from "../Common/RInput/RInput";
-import { useProjectsStore } from "@/store/projectsStore";
-import { EnButtonType, RButton } from "../Common/RButton/RButton";
-import { UsTask } from "@/store/model/UsTask";
+import { FormattedMessage } from "../../Common/Intl/Intl";
+import { RH2 } from "../../Common/RH/RH";
+import { RInput } from "../../Common/RInput/RInput";
+import { useProjectsStore } from "@/store/projects/projectsStore";
+import { EnButtonType, RButton } from "../../Common/RButton/RButton";
+import { UsTask } from "@/store/projects/model/UsTask";
 
 export function EditTasks() {
   const [

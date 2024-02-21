@@ -4,6 +4,8 @@
   "ttl.adding.new.project": "Adding a new project",
   "ttl.editing.project": "Editing: {title}",
   "ttl.tasks": "Tasks",
+  "ttl.error": "Error",
+  "ttl.test": "Test page",
   "btn.add.project": "+ Add project",
   "btn.save": "Save",
   "btn.cancel": "Cancel",
@@ -12,6 +14,9 @@
   "btn.delete": "Delete",
   "btn.confirm": "Confirm",
   "btn.add.task": "Add task",
+  "btn.test.click.exception": "Test click exception",
+  "btn.test.render.exception": "Test render exception",
+  "btn.test.reducer.exception": "Test reducer exception",
   "lbl.title": "Title",
   "lbl.description": "Description",
   "lbl.due.date": "Due date",
@@ -23,5 +28,7 @@
   "txt.bad.date.format": "The expected date format is: M.dd.yyyy",
   "txt.project.exists": "Project with that title already exists",
   "txt.confirm": "Please confirm.",
+  "txt.route.not.found": "Route not found.",
+  "txt.uae": "An unexpected error has occured.",
   "moment.date.format": "M.DD.YYYY"
 }

@@ -1,20 +1,20 @@
-import { useProjectsStore } from "@/store/projectsStore";
-import { EnButtonType, RButton } from "../Common/RButton/RButton";
-import { FormattedMessage, useIntl } from "../Common/Intl/Intl";
-import { RInput } from "../Common/RInput/RInput";
-import { RTextArea } from "../Common/RTextArea/RTextArea";
-import { RH1 } from "../Common/RH/RH";
+import { useProjectsStore } from "@/store/projects/projectsStore";
+import { EnButtonType, RButton } from "../../Common/RButton/RButton";
+import { FormattedMessage, useIntl } from "../../Common/Intl/Intl";
+import { RInput } from "../../Common/RInput/RInput";
+import { RTextArea } from "../../Common/RTextArea/RTextArea";
+import { RH1 } from "../../Common/RH/RH";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { UsProject } from "@/store/model/UsProject";
+import { UsProject } from "@/store/projects/model/UsProject";
 import {
   RDatePicker,
   formatDate,
   parseDate,
   validateDatePicker,
-} from "../Common/RDatePicker/RDatePicker";
-import { validateRequired } from "../Common/common";
+} from "../../Common/RDatePicker/RDatePicker";
+import { validateRequired } from "../../Common/common";
 type ProjectFormInputs = {
   title: string;
   description: string;

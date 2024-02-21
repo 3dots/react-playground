@@ -1,8 +1,8 @@
 import noProj from "@/assets/no-projects.png";
-import { useProjectsStore } from "@/store/projectsStore";
-import { FormattedMessage, useIntl } from "../Common/Intl/Intl";
-import { RButton } from "../Common/RButton/RButton";
-import { RH1 } from "../Common/RH/RH";
+import { useProjectsStore } from "@/store/projects/projectsStore";
+import { FormattedMessage, useIntl } from "../../Common/Intl/Intl";
+import { RButton } from "../../Common/RButton/RButton";
+import { RH1 } from "../../Common/RH/RH";
 
 export function SplashScreen() {
   const addProjectAction = useProjectsStore(sw => sw.beginAddProjectAction);

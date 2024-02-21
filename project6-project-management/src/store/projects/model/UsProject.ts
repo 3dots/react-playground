@@ -1,5 +1,5 @@
 import { UsTask } from "./UsTask";
-import { assignArrayDirectlyIfTyped } from "./util/util";
+import { assignArrayDirectlyIfTyped } from "../../util/util";
 
 export class UsProject {
   title: string = "";

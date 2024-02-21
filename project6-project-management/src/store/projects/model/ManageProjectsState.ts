@@ -1,6 +1,6 @@
 import { UsProject } from "./UsProject";
 import type { UsTask } from "./UsTask";
-import { assignArrayDirectlyIfTyped } from "./util/util";
+import { assignArrayDirectlyIfTyped } from "../../util/util";
 
 export interface IManageProjectsStateWrapper {
   state: ManageProjectsState;
@@ -17,6 +17,7 @@ export interface IManageProjectsStateWrapper {
   selectProjectAction: (index: number) => void;
   addTask: (project: UsProject, newTask: UsTask) => void;
   deleteTask: (project: UsProject, taskToDelete: UsTask) => void;
+  testException: () => void;
 }
 
 export class ManageProjectsState {
