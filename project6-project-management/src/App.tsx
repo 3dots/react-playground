@@ -7,6 +7,7 @@ import { useState, type ErrorInfo } from "react";
 import { useAppStore } from "./store/app/appStore";
 import { RH1 } from "./components/Common/RH/RH";
 import { FormattedMessage } from "./components/Common/Intl/Intl";
+import { PlaceWishes } from "./components/PlaceWishes/PlaceWishes";
 
 export function App() {
   const [errorBoundaryKey] = useState(0);
@@ -40,6 +41,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<ManageProjects />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/places" element={<PlaceWishes />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
