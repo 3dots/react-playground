@@ -18,6 +18,8 @@ export function validateRequired(
  */
 export type GenericFunction = (...args: any[]) => any;
 
+export type GenericPromiseFunction = (...args: any[]) => Promise<any>;
+
 /**
  * Can be used to wrap a function within a function with the
  * same signature.
@@ -27,3 +29,7 @@ export type GenericFunction = (...args: any[]) => any;
 export type TryCatchWrapper<F extends GenericFunction> = (
   ...args: Parameters<F>
 ) => ReturnType<F>;
+
+export type AsyncTryCatchWrapper<F extends GenericPromiseFunction> = (
+  ...args: Parameters<F>
+) => Promise<Awaited<ReturnType<F>>>

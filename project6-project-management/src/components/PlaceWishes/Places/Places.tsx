@@ -1,4 +1,4 @@
-import type { IPlaceDto } from "@/services/places/model/IPlaceDto";
+import type { IPlaceDto } from "@/store/places/model/IPlaceDto";
 
 export interface IPlacesProps {
   title: string,

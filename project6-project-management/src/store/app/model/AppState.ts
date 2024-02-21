@@ -6,10 +6,12 @@ export interface IAppStateWrapper {
   errorTriggered: () => void;
   eventWrapper<F extends GenericFunction>(func: F): TryCatchWrapper<F>;
   testException: () => void;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 export class AppState {
   isError: boolean = false;
+  isLoading: boolean = false;
 
   public constructor(init?: Partial<AppState>) {
     Object.assign(this, init);
@@ -20,6 +22,10 @@ export class AppState {
   }
 
   error(): AppState {
-    return new AppState({...this, isError: true});
+    return new AppState({...this, isError: true, isLoading: false});
+  }
+
+  setIsLoading(isLoading: boolean): AppState {
+    return new AppState({...this, isLoading});
   }
 }

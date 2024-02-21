@@ -1,5 +1,5 @@
-import { FormattedMessage } from "../Common/Intl/Intl";
-import { RH1 } from "../Common/RH/RH";
+import { FormattedMessage } from "../../Common/Intl/Intl";
+import { RH1 } from "../../Common/RH/RH";
 
 export function NotFound() {
   return (

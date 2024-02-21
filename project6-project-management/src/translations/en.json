@@ -30,5 +30,6 @@
   "txt.confirm": "Please confirm.",
   "txt.route.not.found": "Route not found.",
   "txt.uae": "An unexpected error has occured.",
+  "txt.loading": "Loading...",
   "moment.date.format": "M.DD.YYYY"
 }

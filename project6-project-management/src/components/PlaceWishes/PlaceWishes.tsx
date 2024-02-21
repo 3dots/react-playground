@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { Modal } from "./Modal/Modal";
 import "./PlaceWishes.scss";
-import type { IPlaceDto } from "@/services/places/model/IPlaceDto";
+import type { IPlaceDto } from "@/store/places/model/IPlaceDto";
 import { DeleteConfirmation } from "./DeleteConfirmation/DeleteConfirmation";
 import logoImg from '@/assets/places-logo.png';
 import { Places } from "./Places/Places";

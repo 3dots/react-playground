@@ -1,20 +1,22 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ManageProjects } from "./components/ManageProjects/ManageProjects";
-import { Test } from "./components/Test/Test";
-import { NotFound } from "./components/NotFound/NotFound";
-import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
+import { ManageProjects } from "../ManageProjects/ManageProjects";
+import { Test } from "../Test/Test";
+import { NotFound } from "./NotFound/NotFound";
+import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 import { useState, type ErrorInfo } from "react";
-import { useAppStore } from "./store/app/appStore";
-import { RH1 } from "./components/Common/RH/RH";
-import { FormattedMessage } from "./components/Common/Intl/Intl";
-import { PlaceWishes } from "./components/PlaceWishes/PlaceWishes";
+import { useAppStore } from "../../store/app/appStore";
+import { RH1 } from "../Common/RH/RH";
+import { FormattedMessage } from "../Common/Intl/Intl";
+import { PlaceWishes } from "../PlaceWishes/PlaceWishes";
+import { LoadingOverlay } from "./LoadingOverlay/LoadingOverlay";
 
 export function App() {
   const [errorBoundaryKey] = useState(0);
 
-  const [isError, errorTriggered] = useAppStore(sw => [
+  const [isError, isLoading, errorTriggered] = useAppStore(sw => [
     sw.state.isError,
-    sw.errorTriggered,
+    sw.state.isLoading,
+    sw.errorTriggered
   ]);
 
   function handleRenderError(error: Error, errorInfo: ErrorInfo) {
@@ -37,6 +39,7 @@ export function App() {
   } else {
     return (
       <ErrorBoundary key={errorBoundaryKey} onError={handleRenderError}>
+        <LoadingOverlay isLoading={isLoading} />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<ManageProjects />} />

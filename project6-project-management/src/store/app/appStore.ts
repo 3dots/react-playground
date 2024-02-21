@@ -1,8 +1,11 @@
-import type { StoreApi} from "zustand";
+import type { StoreApi } from "zustand";
 import { create } from "zustand";
 import type { IAppStateWrapper } from "./model/AppState";
 import { AppState } from "./model/AppState";
-import type { GenericFunction, TryCatchWrapper } from "@/components/Common/common";
+import type {
+  GenericFunction,
+  TryCatchWrapper,
+} from "@/components/Common/common";
 
 function errorState(set: StoreApi<IAppStateWrapper>["setState"]) {
   set(sw => ({ state: sw.state.error() }));
@@ -10,7 +13,7 @@ function errorState(set: StoreApi<IAppStateWrapper>["setState"]) {
 
 function tryCatchWrapper<F extends GenericFunction>(
   func: F,
-  set: StoreApi<IAppStateWrapper>["setState"]
+  set: StoreApi<IAppStateWrapper>["setState"],
 ): TryCatchWrapper<F> {
   return (...args) => {
     try {
@@ -36,5 +39,16 @@ export const useAppStore = create<IAppStateWrapper>(set => ({
       }
     };
   },
-  testException: tryCatchWrapper(() => set(() => { throw new Error("reducer exception"); }), set)
+  testException: tryCatchWrapper(
+    () =>
+      set(() => {
+        throw new Error("reducer exception");
+      }),
+    set,
+  ),
+  setIsLoading: tryCatchWrapper(
+    (isLoading: boolean) =>
+      set(sw => ({ state: sw.state.setIsLoading(isLoading) })),
+    set,
+  ),
 }));
