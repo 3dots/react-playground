@@ -3,6 +3,7 @@ import {
   ManageProjectsState,
   type IManageProjectsStateWrapper,
 } from "./model/ManageProjectsState";
+import { projectsService } from "@/services/projects/projectsService";
 
 export const persistStorage: PersistStorage<IManageProjectsStateWrapper> = {
   getItem: name => {
@@ -11,12 +12,14 @@ export const persistStorage: PersistStorage<IManageProjectsStateWrapper> = {
     const obj = JSON.parse(str);
     if (!obj?.state?.state) return null;
     try {
+      let state = new ManageProjectsState(obj.state.state);
       let result = {
         state: {
-          state: new ManageProjectsState(obj.state.state),
+          state,
         } as IManageProjectsStateWrapper,
         version: obj.version as number,
       };
+      projectsService.init(state);
       //console.log(result);
       return result;
     } catch {

@@ -83,7 +83,7 @@ export class ManageProjectsState {
     if (this.isAddingNewProject)
       return this.projects.some(x => x.title === title);
     const projectsOtherThanThisOne = this.projects.filter(
-      x => x.title !== this.project.title,
+      x => x.projectId !== this.project.projectId,
     );
     return projectsOtherThanThisOne.some(x => x.title === title);
   }
@@ -110,7 +110,7 @@ export class ManageProjectsState {
   ): ManageProjectsState {
     const newArray: UsProject[] = [];
     for (const p of this.projects) {
-      if (p.title === currentProject.title) {
+      if (p.projectId === currentProject.projectId) {
         newArray.push(editedProject);
       } else {
         newArray.push(p);
@@ -126,7 +126,7 @@ export class ManageProjectsState {
   deleteProjectAction(currentProject: UsProject): ManageProjectsState {
     const newArray: UsProject[] = [];
     for (const p of this.projects) {
-      if (p.title !== currentProject.title) {
+      if (p.projectId !== currentProject.projectId) {
         newArray.push(p);
       }
     }
@@ -148,17 +148,17 @@ export class ManageProjectsState {
   }
 
   addTask(project: UsProject, newTask: UsTask): ManageProjectsState {
-    const projectInList = this.projects.find(x => x.title === project.title);
+    const projectInList = this.projects.find(x => x.projectId === project.projectId);
     if (!projectInList) return this;
     projectInList.tasks = [...projectInList.tasks, newTask];
     return new ManageProjectsState({ ...this });
   }
 
   deleteTask(project: UsProject, taskToDelete: UsTask): ManageProjectsState {
-    const projectInList = this.projects.find(x => x.title === project.title);
+    const projectInList = this.projects.find(x => x.projectId === project.projectId);
     if (!projectInList) return this;
     projectInList.tasks = projectInList.tasks.filter(
-      x => x.text !== taskToDelete.text,
+      x => x.taskId !== taskToDelete.taskId,
     );
     return new ManageProjectsState({ ...this });
   }

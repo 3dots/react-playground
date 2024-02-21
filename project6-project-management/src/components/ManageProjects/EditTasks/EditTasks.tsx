@@ -49,7 +49,7 @@ export function EditTasks() {
       </div>
       <ul className="flex flex-col gap-1 bg-stone-200">
         {tasks.map((x: UsTask) => (
-          <li className="flex px-2 items-center" key={x.text}>
+          <li className="flex px-2 items-center" key={x.taskId}>
             <div>{x.text}</div>
             <div className="ml-auto">
               <RButton

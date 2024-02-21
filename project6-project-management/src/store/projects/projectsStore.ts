@@ -10,6 +10,7 @@ import type {
 } from "@/components/Common/common";
 import type { UsProject } from "./model/UsProject";
 import type { UsTask } from "./model/UsTask";
+import { projectsService } from "@/services/projects/projectsService";
 
 function tryCatchWrapper<F extends GenericFunction>(
   func: F,
@@ -37,16 +38,18 @@ export const useProjectsStore = create<IManageProjectsStateWrapper>()(
       cancelAddEditProjectAction: tryCatchWrapper(() =>
         set(sw => ({ state: sw.state.cancelAddEditProjectAction() })),
       ),
-      addProjectAction: tryCatchWrapper((newProject: UsProject) =>
-        set(sw => ({ state: sw.state.addProjectAction(newProject) })),
-      ),
+      addProjectAction: tryCatchWrapper((newProject: UsProject) => {
+        newProject.projectId = projectsService.getNextProjectId();
+        set(sw => ({ state: sw.state.addProjectAction(newProject) }));
+      }),
       beginEditProjectAction: tryCatchWrapper(() =>
         set(sw => ({ state: sw.state.beginEditProjectAction() })),
       ),
-      editProjectAction: tryCatchWrapper((currentProject: UsProject, editedProject: UsProject) =>
-        set(sw => ({
-          state: sw.state.editProjectAction(currentProject, editedProject),
-        })),
+      editProjectAction: tryCatchWrapper(
+        (currentProject: UsProject, editedProject: UsProject) =>
+          set(sw => ({
+            state: sw.state.editProjectAction(currentProject, editedProject),
+          })),
       ),
       deleteProjectAction: tryCatchWrapper((currentProject: UsProject) =>
         set(sw => ({ state: sw.state.deleteProjectAction(currentProject) })),
@@ -54,9 +57,10 @@ export const useProjectsStore = create<IManageProjectsStateWrapper>()(
       selectProjectAction: tryCatchWrapper((index: number) =>
         set(sw => ({ state: sw.state.selectProjectAction(index) })),
       ),
-      addTask: tryCatchWrapper((project: UsProject, newTask: UsTask) =>
-        set(sw => ({ state: sw.state.addTask(project, newTask) })),
-      ),
+      addTask: tryCatchWrapper((project: UsProject, newTask: UsTask) => {
+        newTask.taskId = projectsService.getNextTaskId();
+        set(sw => ({ state: sw.state.addTask(project, newTask) }));
+      }),
       deleteTask: tryCatchWrapper((project: UsProject, taskToDelete: UsTask) =>
         set(sw => ({ state: sw.state.deleteTask(project, taskToDelete) })),
       ),

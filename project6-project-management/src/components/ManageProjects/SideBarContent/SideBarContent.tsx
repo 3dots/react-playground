@@ -44,7 +44,7 @@ export function SideBarContent() {
       )}
       <ul className="flex flex-col gap-1">
         {projects.map((x: UsProject, index: number) => (
-          <li key={x.title}>
+          <li key={x.projectId}>
             <RA
               onClick={e => handleLinkClick(e, index)}
               className={`w-full inline-block ${

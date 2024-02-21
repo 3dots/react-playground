@@ -2,6 +2,8 @@ import { UsTask } from "./UsTask";
 import { assignArrayDirectlyIfTyped } from "../../util/util";
 
 export class UsProject {
+  projectId!: number;
+
   title: string = "";
   description: string = "";
   dueDate: Date = null!;
