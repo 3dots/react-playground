@@ -22,6 +22,6 @@ export function Modal(props: PropsWithChildren<IModalProps>) {
     <dialog className="modal" ref={dialog} onClose={props.onClose}>
       {props.isOpen ? props.children : null}
     </dialog>,
-    document.getElementById("modal-root")!,
+    document.getElementById("modal-root-places")!,
   );
 }

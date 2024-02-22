@@ -23,6 +23,13 @@ app.get('/places', async (req, res) => {
 
   const placesData = JSON.parse(fileContent);
 
+  // var time = 2000;
+  // var stop = new Date().getTime();
+  // while(new Date().getTime() < stop + time) {
+  //     ;
+  // }
+
+  //res.status(500).json();
   res.status(200).json({ places: placesData });
 });
 
@@ -35,7 +42,7 @@ app.get('/user-places', async (req, res) => {
 });
 
 app.put('/user-places', async (req, res) => {
-  const places = req.body.places;
+  const places = req.body;
 
   await fs.writeFile('./data/user-places.json', JSON.stringify(places));
 

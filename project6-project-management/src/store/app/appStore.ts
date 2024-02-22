@@ -41,6 +41,20 @@ export function asyncTryCatchLoadingWrapper<F extends GenericPromiseFunction>(
   };
 }
 
+export function asyncTryCatchWrapper<F extends GenericPromiseFunction>(
+  func: F,
+): AsyncTryCatchWrapper<F> {
+  return async (...args) => {
+    try {
+      const result = await func(...args);
+      return result;
+    } catch (error) {
+      console.error(error);
+      useAppStore.getState().errorTriggered(stringifyError(error));
+    }
+  };
+}
+
 export const useAppStore = create<IAppStateWrapper>(set => ({
   state: AppState.initialState(),
   resetState: () => set(() => ({ state: AppState.initialState() })),

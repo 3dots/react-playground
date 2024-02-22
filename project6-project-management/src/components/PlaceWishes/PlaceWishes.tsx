@@ -3,49 +3,29 @@ import { Modal } from "./Modal/Modal";
 import "./PlaceWishes.scss";
 import type { IPlaceDto } from "@/store/places/model/IPlaceDto";
 import { DeleteConfirmation } from "./DeleteConfirmation/DeleteConfirmation";
-import logoImg from '@/assets/places-logo.png';
+import logoImg from "@/assets/places-logo.png";
 import { Places } from "./Places/Places";
 import { AvailablePlaces } from "./AvailablePlaces/AvailablePlaces";
-import { useBeforeUnload } from "react-router-dom";
 import { usePlacesStore } from "@/store/places/placesStore";
 
 export function PlaceWishes() {
   const selectedPlace = useRef<IPlaceDto | null>(null);
-  const [userPlaces, setUserPlaces] = useState<IPlaceDto[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const resetState = usePlacesStore(sw => sw.resetState);
-
-  useBeforeUnload(() => {
-    resetState();
-  });  
+  const [userPlaces, selectPlace, deleteSelectedPlace] = usePlacesStore(sw => [ sw.state.selectedPlaces, sw.selectPlace, sw.deleteSelectedPlace ]);
 
   function handleStopRemovePlace() {
     setModalIsOpen(false);
   }
 
-  const handleRemovePlace = useCallback(async function handleRemovePlace() {
-    setUserPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current?.id)
-    );
-
+  const handleRemovePlace = useCallback(function handleRemovePlace() {
+    if (!selectedPlace.current) return;
+    deleteSelectedPlace(selectedPlace.current);
     setModalIsOpen(false);
-  }, []);
+  }, [deleteSelectedPlace]);
 
   function handleStartRemovePlace(place: IPlaceDto) {
     setModalIsOpen(true);
     selectedPlace.current = place;
-  }
-
-  function handleSelectPlace(selectedPlace: IPlaceDto) {
-    setUserPlaces((prevPickedPlaces) => {
-      if (!prevPickedPlaces) {
-        prevPickedPlaces = [];
-      }
-      if (prevPickedPlaces.some((place) => place.id === selectedPlace.id)) {
-        return prevPickedPlaces;
-      }
-      return [selectedPlace, ...prevPickedPlaces];
-    });
   }
 
   return (
@@ -72,7 +52,7 @@ export function PlaceWishes() {
           onSelectPlace={handleStartRemovePlace}
         />
 
-        <AvailablePlaces onSelectPlace={handleSelectPlace} />
+        <AvailablePlaces onSelectPlace={selectPlace} />
       </main>
     </div>
   );
