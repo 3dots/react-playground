@@ -148,14 +148,18 @@ export class ManageProjectsState {
   }
 
   addTask(project: UsProject, newTask: UsTask): ManageProjectsState {
-    const projectInList = this.projects.find(x => x.projectId === project.projectId);
+    const projectInList = this.projects.find(
+      x => x.projectId === project.projectId,
+    );
     if (!projectInList) return this;
     projectInList.tasks = [...projectInList.tasks, newTask];
     return new ManageProjectsState({ ...this });
   }
 
   deleteTask(project: UsProject, taskToDelete: UsTask): ManageProjectsState {
-    const projectInList = this.projects.find(x => x.projectId === project.projectId);
+    const projectInList = this.projects.find(
+      x => x.projectId === project.projectId,
+    );
     if (!projectInList) return this;
     projectInList.tasks = projectInList.tasks.filter(
       x => x.taskId !== taskToDelete.taskId,

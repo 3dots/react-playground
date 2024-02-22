@@ -6,14 +6,19 @@ import { FormattedMessage } from "../../Common/Intl/Intl";
 import { ViewProject } from "../ViewProject/ViewProject";
 
 export function MainContent() {
-  const [isAddingProject, isEditingProject, isSplashScreen, resetState, testException] =
-    useProjectsStore(sw => [
-      sw.state.isAddingNewProject,
-      sw.state.isEditingProject,
-      sw.state.selectedIndex === null,
-      sw.resetState,
-      sw.testException,
-    ]);
+  const [
+    isAddingProject,
+    isEditingProject,
+    isSplashScreen,
+    resetState,
+    testException,
+  ] = useProjectsStore(sw => [
+    sw.state.isAddingNewProject,
+    sw.state.isEditingProject,
+    sw.state.selectedIndex === null,
+    sw.resetState,
+    sw.testException,
+  ]);
 
   const MainRender = function () {
     if (isAddingProject || isEditingProject) return <AddProject />;

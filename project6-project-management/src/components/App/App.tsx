@@ -17,7 +17,7 @@ export function App() {
     sw.state.isError,
     sw.state.errorMsg,
     sw.state.isLoading,
-    sw.errorTriggered
+    sw.errorTriggered,
   ]);
 
   function handleRenderError(error: Error, errorInfo: ErrorInfo) {

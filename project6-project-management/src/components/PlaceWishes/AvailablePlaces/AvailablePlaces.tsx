@@ -36,11 +36,14 @@ export function AvailablePlaces(props: IAvailablePlacesProps) {
   useEffect(() => {
     if (!isLocationSet) {
       setIsLoading(true);
-      navigator.geolocation.getCurrentPosition(position => {
-        setLocation(position.coords.latitude, position.coords.longitude);
-      }, () => {
-        setLocation(null, null);
-      });
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          setLocation(position.coords.latitude, position.coords.longitude);
+        },
+        () => {
+          setLocation(null, null);
+        },
+      );
     }
   }, [isLocationSet, setLocation, setIsLoading]);
 

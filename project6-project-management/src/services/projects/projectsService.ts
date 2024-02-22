@@ -10,14 +10,18 @@ class ProjectsService {
   }
 
   init(state: ManageProjectsState) {
-    const minProjectId = state.projects.length ? Math.min(...state.projects.map(x => x.projectId)) : 0;
+    const minProjectId = state.projects.length
+      ? Math.min(...state.projects.map(x => x.projectId))
+      : 0;
     //console.log(minProjectId);
     this.nextProjectId = this.nextId(minProjectId);
 
     const allTasks: UsTask[] = [];
     state.projects.reduce((acc, x) => [...acc, ...x.tasks], allTasks);
 
-    const minTaskId = allTasks.length ? Math.min(...allTasks.map(x => x.taskId)) : 0;
+    const minTaskId = allTasks.length
+      ? Math.min(...allTasks.map(x => x.taskId))
+      : 0;
     this.nextTaskId = this.nextId(minTaskId);
   }
 
@@ -32,7 +36,6 @@ class ProjectsService {
     this.nextTaskId = this.nextId(nextId);
     return nextId;
   }
-
 }
 
 export const projectsService = new ProjectsService();

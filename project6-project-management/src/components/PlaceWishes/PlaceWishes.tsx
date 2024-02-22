@@ -11,17 +11,24 @@ import { usePlacesStore } from "@/store/places/placesStore";
 export function PlaceWishes() {
   const selectedPlace = useRef<IPlaceDto | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [userPlaces, selectPlace, deleteSelectedPlace] = usePlacesStore(sw => [ sw.state.selectedPlaces, sw.selectPlace, sw.deleteSelectedPlace ]);
+  const [userPlaces, selectPlace, deleteSelectedPlace] = usePlacesStore(sw => [
+    sw.state.selectedPlaces,
+    sw.selectPlace,
+    sw.deleteSelectedPlace,
+  ]);
 
   function handleStopRemovePlace() {
     setModalIsOpen(false);
   }
 
-  const handleRemovePlace = useCallback(function handleRemovePlace() {
-    if (!selectedPlace.current) return;
-    deleteSelectedPlace(selectedPlace.current);
-    setModalIsOpen(false);
-  }, [deleteSelectedPlace]);
+  const handleRemovePlace = useCallback(
+    function handleRemovePlace() {
+      if (!selectedPlace.current) return;
+      deleteSelectedPlace(selectedPlace.current);
+      setModalIsOpen(false);
+    },
+    [deleteSelectedPlace],
+  );
 
   function handleStartRemovePlace(place: IPlaceDto) {
     setModalIsOpen(true);

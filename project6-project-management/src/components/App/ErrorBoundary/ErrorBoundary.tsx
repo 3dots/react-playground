@@ -8,7 +8,6 @@ interface ErrorBoundaryProps {
 export class ErrorBoundary extends React.Component<
   PropsWithChildren<ErrorBoundaryProps>
 > {
-
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.props.onError(error, errorInfo);
   }

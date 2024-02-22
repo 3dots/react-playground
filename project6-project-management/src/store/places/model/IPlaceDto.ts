@@ -1,6 +1,6 @@
 export interface IImageDto {
-  src: string,
-  alt: string
+  src: string;
+  alt: string;
 }
 
 export interface IPlaceDto {
@@ -10,4 +10,3 @@ export interface IPlaceDto {
   lat: number;
   lon: number;
 }
-

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export interface IProgressBarProps {
   timer: number;
@@ -10,7 +10,7 @@ export function ProgressBar(props: IProgressBarProps) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRemainingTime((prevTime) => prevTime - 10);
+      setRemainingTime(prevTime => prevTime - 10);
     }, 10);
 
     return () => {

@@ -32,4 +32,4 @@ export type TryCatchWrapper<F extends GenericFunction> = (
 
 export type AsyncTryCatchWrapper<F extends GenericPromiseFunction> = (
   ...args: Parameters<F>
-) => Promise<Awaited<ReturnType<F>>>
+) => Promise<Awaited<ReturnType<F>>>;

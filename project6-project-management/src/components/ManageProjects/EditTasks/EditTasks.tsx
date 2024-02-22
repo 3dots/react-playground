@@ -7,16 +7,11 @@ import { EnButtonType, RButton } from "../../Common/RButton/RButton";
 import { UsTask } from "@/store/projects/model/UsTask";
 
 export function EditTasks() {
-  const [
-    project,
-    tasks,
-    addTask,
-    deleteTask
-  ] = useProjectsStore(sw => [
+  const [project, tasks, addTask, deleteTask] = useProjectsStore(sw => [
     sw.state.project,
     sw.state.project.tasks,
     sw.addTask,
-    sw.deleteTask
+    sw.deleteTask,
   ]);
 
   const [newTaskText, setNewTaskText] = useState("");

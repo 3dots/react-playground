@@ -11,15 +11,12 @@ import { formatDate } from "../../Common/RDatePicker/RDatePicker";
 import { EditTasks } from "../EditTasks/EditTasks";
 
 export function ViewProject() {
-  const [
-    project,
-    beginEditProjectAction,
-    deleteProjectAction,
-  ] = useProjectsStore(sw => [
-    sw.state.project,
-    sw.beginEditProjectAction,
-    sw.deleteProjectAction,
-  ]);
+  const [project, beginEditProjectAction, deleteProjectAction] =
+    useProjectsStore(sw => [
+      sw.state.project,
+      sw.beginEditProjectAction,
+      sw.deleteProjectAction,
+    ]);
   const confirmDialogRef = useRef<IConfirmDialogHandle>(null);
   const intl = useIntl();
 

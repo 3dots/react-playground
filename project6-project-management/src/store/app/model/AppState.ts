@@ -20,10 +20,15 @@ export class AppState {
   }
 
   error(msg?: string): AppState {
-    return new AppState({...this, isError: true, isLoading: false, errorMsg: msg ?? ""});
+    return new AppState({
+      ...this,
+      isError: true,
+      isLoading: false,
+      errorMsg: msg ?? "",
+    });
   }
 
   setIsLoading(isLoading: boolean): AppState {
-    return new AppState({...this, isLoading});
+    return new AppState({ ...this, isLoading });
   }
 }

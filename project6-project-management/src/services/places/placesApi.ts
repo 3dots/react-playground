@@ -24,7 +24,10 @@ function apiTryCatchWrapper<F extends GenericPromiseFunction>(
   };
 }
 
-async function rfetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+async function rfetch(
+  input: RequestInfo | URL,
+  init?: RequestInit,
+): Promise<Response> {
   const response = await fetch(input, init);
   if (response.ok) return response;
   throw new Error(`${rfetch.name} ${response.status} ${response.statusText}`);
@@ -71,8 +74,8 @@ class PlacesApi {
       method: "PUT",
       body: JSON.stringify(placeIds),
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     };
     return apiTryCatchWrapper(
       async (): Promise<void> => {
