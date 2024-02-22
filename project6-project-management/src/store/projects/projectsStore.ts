@@ -3,27 +3,10 @@ import { persist } from "zustand/middleware";
 import type { IManageProjectsStateWrapper } from "./model/ManageProjectsState";
 import { ManageProjectsState } from "./model/ManageProjectsState";
 import { persistStorage } from "./persistStorage";
-import { useAppStore } from "../app/appStore";
-import type {
-  GenericFunction,
-  TryCatchWrapper,
-} from "@/components/Common/common";
+import { tryCatchWrapper } from "../app/appStore";
 import type { UsProject } from "./model/UsProject";
 import type { UsTask } from "./model/UsTask";
 import { projectsService } from "@/services/projects/projectsService";
-
-function tryCatchWrapper<F extends GenericFunction>(
-  func: F,
-): TryCatchWrapper<F> {
-  return (...args) => {
-    try {
-      return func(...args);
-    } catch (error) {
-      console.error(error);
-      useAppStore.getState().errorTriggered();
-    }
-  };
-}
 
 export const useProjectsStore = create<IManageProjectsStateWrapper>()(
   persist(

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --body-background-color: #1f1c2c;
+  --primary-color: #8feeff;
+}
+
 body {
   display: block;
 }

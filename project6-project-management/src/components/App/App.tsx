@@ -13,15 +13,16 @@ import { LoadingOverlay } from "./LoadingOverlay/LoadingOverlay";
 export function App() {
   const [errorBoundaryKey] = useState(0);
 
-  const [isError, isLoading, errorTriggered] = useAppStore(sw => [
+  const [isError, errorMsg, isLoading, errorTriggered] = useAppStore(sw => [
     sw.state.isError,
+    sw.state.errorMsg,
     sw.state.isLoading,
     sw.errorTriggered
   ]);
 
   function handleRenderError(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
-    errorTriggered();
+    errorTriggered(error?.message);
   }
 
   if (isError) {
@@ -33,7 +34,7 @@ export function App() {
         <div>
           <FormattedMessage id="txt.uae" />
         </div>
-        <div>Todo: add export log button.</div>
+        <div>{errorMsg}</div>
       </main>
     );
   } else {

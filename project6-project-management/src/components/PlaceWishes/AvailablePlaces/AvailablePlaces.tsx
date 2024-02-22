@@ -8,16 +8,18 @@ export interface IAvailablePlacesProps {
 }
 
 export function AvailablePlaces(props: IAvailablePlacesProps) {
-  const getPlaces = usePlacesStore(sw => sw.getPlaces);
+  const [isInitialized, availablePlaces, getPlaces] = usePlacesStore(sw => [sw.state.isInitialized, sw.state.availablePlaces, sw.getPlaces]);
 
   useEffect(() => {
-    getPlaces();
-  }, [getPlaces]);
+    if (!isInitialized) {
+      getPlaces();
+    }
+  }, [isInitialized, getPlaces]);
 
   return (
     <Places
       title="Available Places"
-      places={[]}
+      places={availablePlaces}
       fallbackText="No places available."
       onSelectPlace={props.onSelectPlace}
     />

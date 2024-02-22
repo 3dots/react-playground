@@ -2,14 +2,11 @@ import { useState } from "react";
 import { FormattedMessage } from "../Common/Intl/Intl";
 import { RButton } from "../Common/RButton/RButton";
 import { RH1 } from "../Common/RH/RH";
-import { useAppStore } from "@/store/app/appStore";
+import { tryCatchWrapper, useAppStore } from "@/store/app/appStore";
 
 export function Test() {
   const [isRenderException, setIsRenderException] = useState(false);
-  const [eventWrapper, testException] = useAppStore(sw => [
-    sw.eventWrapper,
-    sw.testException,
-  ]);
+  const testException = useAppStore(sw => sw.testException);
 
   if (isRenderException) throw new Error("Render exception");
 
@@ -24,7 +21,7 @@ export function Test() {
         </RButton>
         <RButton
           onClick={() =>
-            eventWrapper(() => {
+            tryCatchWrapper(() => {
               throw new Error("Handler error");
             })()
           }

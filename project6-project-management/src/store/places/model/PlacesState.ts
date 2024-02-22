@@ -7,6 +7,7 @@ export interface IPlacesStateWrapper {
 }
 
 export class PlacesState {
+  isInitialized: boolean = false;
   availablePlaces: IPlaceDto[] = [];
 
   public constructor(init?: Partial<PlacesState>) {
@@ -15,5 +16,9 @@ export class PlacesState {
 
   static initialState(): PlacesState {
     return new PlacesState();
+  }
+
+  setAvailablePlaces(places: IPlaceDto[]) {
+    return new PlacesState({ ...this, availablePlaces: places, isInitialized: true });
   }
 }

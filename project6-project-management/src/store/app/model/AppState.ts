@@ -1,16 +1,14 @@
-import type { GenericFunction, TryCatchWrapper } from "@/components/Common/common";
-
 export interface IAppStateWrapper {
   state: AppState;
   resetState: () => void;
-  errorTriggered: () => void;
-  eventWrapper<F extends GenericFunction>(func: F): TryCatchWrapper<F>;
+  errorTriggered: (msg?: string) => void;
   testException: () => void;
   setIsLoading: (isLoading: boolean) => void;
 }
 
 export class AppState {
   isError: boolean = false;
+  errorMsg: string = "";
   isLoading: boolean = false;
 
   public constructor(init?: Partial<AppState>) {
@@ -21,8 +19,8 @@ export class AppState {
     return new AppState();
   }
 
-  error(): AppState {
-    return new AppState({...this, isError: true, isLoading: false});
+  error(msg?: string): AppState {
+    return new AppState({...this, isError: true, isLoading: false, errorMsg: msg ?? ""});
   }
 
   setIsLoading(isLoading: boolean): AppState {

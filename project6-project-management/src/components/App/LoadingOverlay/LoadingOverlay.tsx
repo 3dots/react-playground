@@ -1,4 +1,5 @@
 import { FormattedMessage, useIntl } from "@/components/Common/Intl/Intl";
+import cssClasses from "./LoadingOverlay.module.css"
 
 export interface ILoadingOverlayProps {
   isLoading: boolean;
@@ -9,14 +10,14 @@ export function LoadingOverlay(props: ILoadingOverlayProps) {
 
   if (props.isLoading) {
     return (
-      <div className="h-dvh w-screen flex items-center justify-center fixed top-0 left-0 z-50 bg-transparent/50">
+      <div className={cssClasses["loading-screen"]}>
         <div>
-          <div className="relative bg-white flex flex-col items-center justify-center p-7 rounded-2xl gap-6">
+          <div className={cssClasses["loading-image-div"]}>
             <svg fill="currentColor" role="img" aria-label={intl.formatMessage({ id: "txt.loading" })}>
               <use xlinkHref="bootstrap-icons-custom.svg#calendar-event" />
             </svg>
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">
+            <div className={cssClasses["spinner-border"]} role="status">
+              <span className="sr-only">
                 <FormattedMessage id="txt.loading" />
               </span>
             </div>

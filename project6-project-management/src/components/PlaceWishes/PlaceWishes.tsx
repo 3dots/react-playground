@@ -6,11 +6,18 @@ import { DeleteConfirmation } from "./DeleteConfirmation/DeleteConfirmation";
 import logoImg from '@/assets/places-logo.png';
 import { Places } from "./Places/Places";
 import { AvailablePlaces } from "./AvailablePlaces/AvailablePlaces";
+import { useBeforeUnload } from "react-router-dom";
+import { usePlacesStore } from "@/store/places/placesStore";
 
 export function PlaceWishes() {
   const selectedPlace = useRef<IPlaceDto | null>(null);
   const [userPlaces, setUserPlaces] = useState<IPlaceDto[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const resetState = usePlacesStore(sw => sw.resetState);
+
+  useBeforeUnload(() => {
+    resetState();
+  });  
 
   function handleStopRemovePlace() {
     setModalIsOpen(false);

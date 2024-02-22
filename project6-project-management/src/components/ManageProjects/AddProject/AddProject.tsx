@@ -15,7 +15,7 @@ import {
   validateDatePicker,
 } from "../../Common/RDatePicker/RDatePicker";
 import { validateRequired } from "../../Common/common";
-import { useAppStore } from "@/store/app/appStore";
+import { tryCatchWrapper } from "@/store/app/appStore";
 type ProjectFormInputs = {
   title: string;
   description: string;
@@ -38,8 +38,6 @@ export function AddProject() {
     sw.editProjectAction,
     sw.state,
   ]);
-
-  const eventWrapper= useAppStore(sw => sw.eventWrapper);
 
   const {
     register,
@@ -94,7 +92,7 @@ export function AddProject() {
     <div className="flex w-100">
       <form
         className="w-[500px] flex mx-auto flex-col gap-2"
-        onSubmit={handleSubmit(eventWrapper(handleSave))}
+        onSubmit={handleSubmit(tryCatchWrapper(handleSave))}
         noValidate
         autoComplete="off"
       >

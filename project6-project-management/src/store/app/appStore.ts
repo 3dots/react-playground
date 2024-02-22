@@ -1,26 +1,42 @@
-import type { StoreApi } from "zustand";
 import { create } from "zustand";
 import type { IAppStateWrapper } from "./model/AppState";
 import { AppState } from "./model/AppState";
 import type {
+  AsyncTryCatchWrapper,
   GenericFunction,
+  GenericPromiseFunction,
   TryCatchWrapper,
 } from "@/components/Common/common";
 
-function errorState(set: StoreApi<IAppStateWrapper>["setState"]) {
-  set(sw => ({ state: sw.state.error() }));
+function stringifyError(error: any) {
+  return JSON.stringify(error, Object.getOwnPropertyNames(error));
 }
 
-function tryCatchWrapper<F extends GenericFunction>(
+export function tryCatchWrapper<F extends GenericFunction>(
   func: F,
-  set: StoreApi<IAppStateWrapper>["setState"],
 ): TryCatchWrapper<F> {
   return (...args) => {
     try {
       return func(...args);
     } catch (error) {
       console.error(error);
-      errorState(set);
+      useAppStore.getState().errorTriggered(stringifyError(error));
+    }
+  };
+}
+
+export function asyncTryCatchLoadingWrapper<F extends GenericPromiseFunction>(
+  func: F,
+): AsyncTryCatchWrapper<F> {
+  return async (...args) => {
+    try {
+      useAppStore.getState().setIsLoading(true);
+      const result = await func(...args);
+      useAppStore.getState().setIsLoading(false);
+      return result;
+    } catch (error) {
+      console.error(error);
+      useAppStore.getState().errorTriggered(stringifyError(error));
     }
   };
 }
@@ -28,27 +44,13 @@ function tryCatchWrapper<F extends GenericFunction>(
 export const useAppStore = create<IAppStateWrapper>(set => ({
   state: AppState.initialState(),
   resetState: () => set(() => ({ state: AppState.initialState() })),
-  errorTriggered: () => errorState(set),
-  eventWrapper<F extends GenericFunction>(func: F) {
-    return (...args) => {
-      try {
-        return func(...args);
-      } catch (error) {
-        console.error(error);
-        errorState(set);
-      }
-    };
-  },
-  testException: tryCatchWrapper(
-    () =>
-      set(() => {
-        throw new Error("reducer exception");
-      }),
-    set,
+  errorTriggered: (msg?: string) => set(sw => ({ state: sw.state.error(msg) })),
+  testException: tryCatchWrapper(() =>
+    set(() => {
+      throw new Error("reducer exception");
+    }),
   ),
-  setIsLoading: tryCatchWrapper(
-    (isLoading: boolean) =>
-      set(sw => ({ state: sw.state.setIsLoading(isLoading) })),
-    set,
+  setIsLoading: tryCatchWrapper((isLoading: boolean) =>
+    set(sw => ({ state: sw.state.setIsLoading(isLoading) })),
   ),
 }));
