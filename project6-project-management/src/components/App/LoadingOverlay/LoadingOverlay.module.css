@@ -6,19 +6,25 @@
   /**/
   --loading-spinner-svg-height: 76px;
   --loading-spinner-animation-height: 110px;
-}
 
-.loading-screen {
-  width: 100vw;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--loading-spinner-background-color);
+}
+
+.loading-screen-global {
+  width: 100vw;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: var(--loading-spinner-background-color);
   z-index: 200;
+}
+
+.loading-screen-local {
+  width: 100%;
+  height: 100%;
 }
 
 .loading-screen > div {

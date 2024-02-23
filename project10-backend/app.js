@@ -23,11 +23,11 @@ app.get('/places', async (req, res) => {
 
   const placesData = JSON.parse(fileContent);
 
-  // var time = 2000;
-  // var stop = new Date().getTime();
-  // while(new Date().getTime() < stop + time) {
-  //     ;
-  // }
+  var time = 1000;
+  var stop = new Date().getTime();
+  while(new Date().getTime() < stop + time) {
+      ;
+  }
 
   //res.status(500).json();
   res.status(200).json({ places: placesData });
@@ -40,7 +40,7 @@ app.get('/user-places', async (req, res) => {
     const fileContent = await fs.readFile('./data/user-places.json');
     places = JSON.parse(fileContent);
   } catch {
-    
+
   }
 
   res.status(200).json({ places });

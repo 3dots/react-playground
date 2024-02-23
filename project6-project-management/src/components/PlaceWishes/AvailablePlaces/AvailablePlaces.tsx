@@ -15,14 +15,12 @@ export function AvailablePlaces(props: IAvailablePlacesProps) {
     getPlaces,
     isLocationSet,
     setLocation,
-    isInitialized,
   ] = usePlacesStore(sw => [
     sw.state.isFetched,
     sw.state.availablePlaces,
     sw.getPlaces,
     sw.state.isLocationSet,
-    sw.setLocation,
-    sw.state.isInitialized,
+    sw.setLocation
   ]);
   const setIsLoading = useAppStore(sw => sw.setIsLoading);
 
@@ -46,10 +44,6 @@ export function AvailablePlaces(props: IAvailablePlacesProps) {
       );
     }
   }, [isLocationSet, setLocation, setIsLoading]);
-
-  useEffect(() => {
-    if (isInitialized) setIsLoading(false);
-  }, [isInitialized, setIsLoading]);
 
   return (
     <Places

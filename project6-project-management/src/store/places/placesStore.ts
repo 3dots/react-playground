@@ -3,6 +3,7 @@ import {
   asyncTryCatchLoadingWrapper,
   asyncTryCatchWrapper,
   tryCatchWrapper,
+  useAppStore,
 } from "../app/appStore";
 import { PlacesState, type IPlacesStateWrapper } from "./model/PlacesState";
 import { create } from "zustand";
@@ -17,10 +18,12 @@ export const usePlacesStore = create<IPlacesStateWrapper>((set, get) => ({
       placesApi.getSelectedPlaces(),
     ]);
     set(sw => ({ state: sw.state.setAvailablePlaces(places, selectedPlaces) }));
+    if (get().state.isInitialized) useAppStore.getState().setIsLoading(false);
   }),
   setLocation: tryCatchWrapper(
     (latitude: number | null, longitude: number | null) => {
       set(sw => ({ state: sw.state.setLocation(latitude, longitude) }));
+      if (get().state.isInitialized) useAppStore.getState().setIsLoading(false);
     },
   ),
   selectPlace: asyncTryCatchLoadingWrapper(async (place: IPlaceDto) => {

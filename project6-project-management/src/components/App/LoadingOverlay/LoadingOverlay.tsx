@@ -3,6 +3,7 @@ import cssClasses from "./LoadingOverlay.module.css";
 
 export interface ILoadingOverlayProps {
   isLoading: boolean;
+  isGlobal?: boolean;
 }
 
 export function LoadingOverlay(props: ILoadingOverlayProps) {
@@ -10,7 +11,9 @@ export function LoadingOverlay(props: ILoadingOverlayProps) {
 
   if (props.isLoading) {
     return (
-      <div className={cssClasses["loading-screen"]}>
+      <div
+        className={`${cssClasses["loading-screen"]} ${props.isGlobal ? cssClasses["loading-screen-global"] : cssClasses["loading-screen-local"]}`}
+      >
         <div>
           <div className={cssClasses["loading-image-div"]}>
             <svg
