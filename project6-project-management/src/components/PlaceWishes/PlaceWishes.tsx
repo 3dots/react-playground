@@ -17,22 +17,44 @@ export function PlaceWishes() {
     sw.deleteSelectedPlace,
   ]);
 
+  const CONFIRM_DELAY = 3000;
+  const progressTimerRef = useRef<number | null>(null);
+  const [timeoutProgress, setTimeoutProgress] = useState(CONFIRM_DELAY);
+  const progressRefreshTime = 50;
+
   function handleStopRemovePlace() {
-    setModalIsOpen(false);
+    closeModal();
   }
 
-  const handleRemovePlace = useCallback(
-    function handleRemovePlace() {
-      if (!selectedPlace.current) return;
-      deleteSelectedPlace(selectedPlace.current);
-      setModalIsOpen(false);
-    },
-    [deleteSelectedPlace],
-  );
+  const handleRemovePlace = useCallback(() => {
+    if (!selectedPlace.current) return;
+    deleteSelectedPlace(selectedPlace.current);
+    closeModal();
+  }, [deleteSelectedPlace]);
 
   function handleStartRemovePlace(place: IPlaceDto) {
-    setModalIsOpen(true);
+    openModal();
     selectedPlace.current = place;
+  }
+
+  function openModal() {
+    setModalIsOpen(true);
+    setTimeoutProgress(CONFIRM_DELAY);
+    progressTimerRef.current = setInterval(() => {
+      setTimeoutProgress(x => {
+        const newValue = x - progressRefreshTime;
+        if (newValue <= 0) handleRemovePlace();
+        return newValue;
+      });
+    }, progressRefreshTime);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+    if (progressTimerRef.current) {
+      clearInterval(progressTimerRef.current);
+      progressTimerRef.current = null;
+    }
   }
 
   return (
@@ -41,6 +63,8 @@ export function PlaceWishes() {
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
+          fullTimeout={CONFIRM_DELAY}
+          timeoutProgress={timeoutProgress}
         />
       </Modal>
       <header>
