@@ -36,7 +36,7 @@ export function PlaceWishes() {
   }
 
   return (
-    <div className="PlaceWishesContainer overflow-auto">
+    <div className="PlaceWishesContainer MainContainer overflow-auto">
       <Modal isOpen={modalIsOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
