@@ -13,9 +13,10 @@ import { LoadingOverlay } from "./LoadingOverlay/LoadingOverlay";
 export function App() {
   const [errorBoundaryKey] = useState(0);
 
-  const [isError, errorMsg, isLoading, errorTriggered] = useAppStore(sw => [
+  const [isError, errorMsg, timeStamp, isLoading, errorTriggered] = useAppStore(sw => [
     sw.state.isError,
     sw.state.errorMsg,
+    sw.state.timeStamp,
     sw.state.isLoading,
     sw.errorTriggered,
   ]);
@@ -34,6 +35,7 @@ export function App() {
         <div>
           <FormattedMessage id="txt.uae" />
         </div>
+        <div>{timeStamp}</div>
         <div>{errorMsg}</div>
       </main>
     );

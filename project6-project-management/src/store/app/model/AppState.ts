@@ -9,6 +9,8 @@ export interface IAppStateWrapper {
 export class AppState {
   isError: boolean = false;
   errorMsg: string = "";
+  timeStamp: string = "";
+
   isLoading: boolean = false;
 
   public constructor(init?: Partial<AppState>) {
@@ -25,6 +27,7 @@ export class AppState {
       isError: true,
       isLoading: false,
       errorMsg: msg ?? "",
+      timeStamp: new Date().toString(),
     });
   }
 
