@@ -10,6 +10,7 @@ import { FormattedMessage } from "../Common/Intl/Intl";
 import { PlaceWishes } from "../PlaceWishes/PlaceWishes";
 import { LoadingOverlay } from "./LoadingOverlay/LoadingOverlay";
 import { PlaceWishesAlt } from "../PlaceWishes/PlaceWishesAlt";
+import { FormsPlayground } from "../FormsPlayground/FormsPlayground";
 
 export function App() {
   const [errorBoundaryKey] = useState(0);
@@ -50,6 +51,7 @@ export function App() {
             <Route path="/test" element={<Test />} />
             <Route path="/places" element={<PlaceWishes />} />
             <Route path="/places2" element={<PlaceWishesAlt />} />
+            <Route path="/forms" element={<FormsPlayground />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

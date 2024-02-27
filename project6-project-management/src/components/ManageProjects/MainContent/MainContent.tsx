@@ -4,6 +4,7 @@ import { SplashScreen } from "../SplashScreen/SplashScreen";
 import { RButton } from "../../Common/RButton/RButton";
 import { FormattedMessage } from "../../Common/Intl/Intl";
 import { ViewProject } from "../ViewProject/ViewProject";
+import { Link } from "react-router-dom";
 
 export function MainContent() {
   const [
@@ -36,6 +37,9 @@ export function MainContent() {
         <RButton onClick={testException}>
           <FormattedMessage id="btn.test.reducer.exception" />
         </RButton>
+      </div>
+      <div>
+        <Link to="Test" className="test-class">Test</Link>
       </div>
     </>
   );
