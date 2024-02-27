@@ -11,17 +11,21 @@ import { PlaceWishes } from "../PlaceWishes/PlaceWishes";
 import { LoadingOverlay } from "./LoadingOverlay/LoadingOverlay";
 import { PlaceWishesAlt } from "../PlaceWishes/PlaceWishesAlt";
 import { FormsPlayground } from "../FormsPlayground/FormsPlayground";
+import { TopBarLayout } from "./Layouts/TopBarLayout";
+import { EnRoutePath } from "./util/routes";
 
 export function App() {
   const [errorBoundaryKey] = useState(0);
 
-  const [isError, errorMsg, timeStamp, isLoading, errorTriggered] = useAppStore(sw => [
-    sw.state.isError,
-    sw.state.errorMsg,
-    sw.state.timeStamp,
-    sw.state.isLoading,
-    sw.errorTriggered,
-  ]);
+  const [isError, errorMsg, timeStamp, isLoading, errorTriggered] = useAppStore(
+    sw => [
+      sw.state.isError,
+      sw.state.errorMsg,
+      sw.state.timeStamp,
+      sw.state.isLoading,
+      sw.errorTriggered,
+    ],
+  );
 
   function handleRenderError(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
@@ -47,11 +51,13 @@ export function App() {
         <LoadingOverlay isLoading={isLoading} isGlobal={true} />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<ManageProjects />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/places" element={<PlaceWishes />} />
-            <Route path="/places2" element={<PlaceWishesAlt />} />
-            <Route path="/forms" element={<FormsPlayground />} />
+            <Route path={EnRoutePath.Default} element={<ManageProjects />} />
+            <Route element={<TopBarLayout />}>
+              <Route path={EnRoutePath.Test} element={<Test />} />
+              <Route path={EnRoutePath.Places} element={<PlaceWishes />} />
+              <Route path={EnRoutePath.Places2} element={<PlaceWishesAlt />} />
+            </Route>
+            <Route path={EnRoutePath.Forms} element={<FormsPlayground />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
