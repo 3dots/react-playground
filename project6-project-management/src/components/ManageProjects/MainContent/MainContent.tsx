@@ -39,7 +39,9 @@ export function MainContent() {
         </RButton>
       </div>
       <div>
-        <Link to="Test" className="test-class">Test</Link>
+        <Link to="Test" className="test-class">
+          Test
+        </Link>
       </div>
     </>
   );

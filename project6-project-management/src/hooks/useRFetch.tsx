@@ -1,7 +1,9 @@
-import type { Dispatch} from "react";
+import type { Dispatch } from "react";
 import { useEffect, useState } from "react";
 
-export function useRFetch<T>(func: () => Promise<T>): [T | null, Dispatch<T | null>, boolean, string] {
+export function useRFetch<T>(
+  func: () => Promise<T>,
+): [T | null, Dispatch<T | null>, boolean, string] {
   const [result, setResult] = useState<T | null>(null);
   const [isFetching, setIsFetching] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -17,8 +19,10 @@ export function useRFetch<T>(func: () => Promise<T>): [T | null, Dispatch<T | nu
         console.log(error);
         let msgPrefix = `${useRFetch.name} promise failed.`;
         let msg = "";
-        if (error !== null && typeof error === "object" && "message" in error) msg = `${msgPrefix} ${error.message}`;
-        if (error !== null && typeof error === "string") msg = `${msgPrefix} ${error}`;
+        if (error !== null && typeof error === "object" && "message" in error)
+          msg = `${msgPrefix} ${error.message}`;
+        if (error !== null && typeof error === "string")
+          msg = `${msgPrefix} ${error}`;
         setErrorMsg(msg);
       }
 
@@ -29,5 +33,5 @@ export function useRFetch<T>(func: () => Promise<T>): [T | null, Dispatch<T | nu
     wrapper();
   }, [func]);
 
-  return [ result, setResult, isFetching, errorMsg ];
+  return [result, setResult, isFetching, errorMsg];
 }

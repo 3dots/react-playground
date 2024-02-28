@@ -9,19 +9,14 @@ export interface IAvailablePlacesProps {
 }
 
 export function AvailablePlaces(props: IAvailablePlacesProps) {
-  const [
-    isFetched,
-    availablePlaces,
-    getPlaces,
-    isLocationSet,
-    setLocation,
-  ] = usePlacesStore(sw => [
-    sw.state.isFetched,
-    sw.state.availablePlaces,
-    sw.getPlaces,
-    sw.state.isLocationSet,
-    sw.setLocation
-  ]);
+  const [isFetched, availablePlaces, getPlaces, isLocationSet, setLocation] =
+    usePlacesStore(sw => [
+      sw.state.isFetched,
+      sw.state.availablePlaces,
+      sw.getPlaces,
+      sw.state.isLocationSet,
+      sw.setLocation,
+    ]);
   const setIsLoading = useAppStore(sw => sw.setIsLoading);
 
   useEffect(() => {

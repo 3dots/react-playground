@@ -67,4 +67,7 @@ export const useAppStore = create<IAppStateWrapper>(set => ({
   setIsLoading: tryCatchWrapper((isLoading: boolean) =>
     set(sw => ({ state: sw.state.setIsLoading(isLoading) })),
   ),
+  login: tryCatchWrapper((isAuthenticated: boolean) =>
+    set(sw => ({ state: sw.state.login(isAuthenticated) })),
+  ),
 }));

@@ -1,6 +1,6 @@
 export interface IProgressBarProps {
-  value: number,
-  max: number,
+  value: number;
+  max: number;
 }
 
 export function ProgressBar(props: IProgressBarProps) {

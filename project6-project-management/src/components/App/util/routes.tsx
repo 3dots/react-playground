@@ -11,6 +11,7 @@ import { PlaceWishes } from "@/components/PlaceWishes/PlaceWishes";
 import { PlaceWishesAlt } from "@/components/PlaceWishes/PlaceWishesAlt";
 import { FormsPlayground } from "@/components/FormsPlayground/FormsPlayground";
 import { NotFound } from "../NotFound/NotFound";
+import { SecureOutlet } from "../SecureOutlet/SecureOutlet";
 
 export enum EnRoutePath {
   Default = "/",
@@ -40,8 +41,10 @@ export const router = createBrowserRouter(
           path={`${EnRoutePath.Test}/:${nameof<TestParams>("id")}`}
           element={<Test />}
         />
-        <Route path={EnRoutePath.Places} element={<PlaceWishes />} />
-        <Route path={EnRoutePath.Places2} element={<PlaceWishesAlt />} />
+        <Route element={<SecureOutlet />}>
+          <Route path={EnRoutePath.Places} element={<PlaceWishes />} />
+          <Route path={EnRoutePath.Places2} element={<PlaceWishesAlt />} />
+        </Route>
       </Route>
       {/* Relative paths. This seems iffy. / means total path */}
       <Route element={<TopBarLayout />} path="/root">

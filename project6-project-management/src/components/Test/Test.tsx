@@ -3,7 +3,12 @@ import { FormattedMessage } from "../Common/Intl/Intl";
 import { RButton } from "../Common/RButton/RButton";
 import { RH1 } from "../Common/RH/RH";
 import { tryCatchWrapper, useAppStore } from "@/store/app/appStore";
-import { useLoaderData, useNavigate, useNavigation, useParams } from "react-router-dom";
+import {
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useParams,
+} from "react-router-dom";
 import type { TestParams } from "../App/util/routes";
 import { EnRoutePath } from "../App/util/routes";
 
@@ -18,7 +23,7 @@ export function Test() {
   const params = useParams<TestParams>();
 
   const loaderData = useLoaderData() as string;
-  
+
   return (
     <main className="p-2 flex flex-col gap-2">
       <RH1>
@@ -48,16 +53,14 @@ export function Test() {
           Test manual navigate
         </RButton>
       </div>
-      <div>
-          Params: {params.id}
-      </div>
-      <div>
-        Loader data: {loaderData}
-      </div>
+      <div>Params: {params.id}</div>
+      <div>Loader data: {loaderData}</div>
     </main>
   );
 }
 
 export function testLoader(): Promise<string> {
-  return new Promise(resolve => { setTimeout(() => resolve("Such data"), 2000) });
+  return new Promise(resolve => {
+    setTimeout(() => resolve("Such data"), 2000);
+  });
 }

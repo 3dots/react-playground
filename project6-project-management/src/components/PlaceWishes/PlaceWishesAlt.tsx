@@ -55,19 +55,24 @@ export function PlaceWishesAlt() {
   }
 
   const fetch1 = useCallback(() => placesApi.getSelectedPlaces(), []);
-  const [selectedPlaces,, isLoadingSelectedPlaces, errorMsgSelectedPlaces] = useRFetch(fetch1);
+  const [selectedPlaces, , isLoadingSelectedPlaces, errorMsgSelectedPlaces] =
+    useRFetch(fetch1);
 
-  let fallBacktextSelectedPlaces = "Select the places you would like to visit below.";
-  if (errorMsgSelectedPlaces) fallBacktextSelectedPlaces = errorMsgSelectedPlaces;
+  let fallBacktextSelectedPlaces =
+    "Select the places you would like to visit below.";
+  if (errorMsgSelectedPlaces)
+    fallBacktextSelectedPlaces = errorMsgSelectedPlaces;
   if (isLoadingSelectedPlaces) fallBacktextSelectedPlaces = "Loading";
 
   function handleSelectPlace() {}
 
   const fetch2 = useCallback(() => placesApi.getPlaces(), []);
-  const [availablePlaces, , isLoadingAvailablePlaces, errorMsgAvailablePlaces] = useRFetch(fetch2);
+  const [availablePlaces, , isLoadingAvailablePlaces, errorMsgAvailablePlaces] =
+    useRFetch(fetch2);
 
   let fallBackAvailablePlaces = "No places available.";
-  if (errorMsgAvailablePlaces) fallBackAvailablePlaces = errorMsgAvailablePlaces;
+  if (errorMsgAvailablePlaces)
+    fallBackAvailablePlaces = errorMsgAvailablePlaces;
   if (isLoadingAvailablePlaces) fallBackAvailablePlaces = "Loading";
 
   let userPlaces: IPlaceDto[] = [];

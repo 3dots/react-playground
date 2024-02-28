@@ -4,6 +4,7 @@ export interface IAppStateWrapper {
   errorTriggered: (msg?: string) => void;
   testException: () => void;
   setIsLoading: (isLoading: boolean) => void;
+  login: (isAuthenticated: boolean) => void;
 }
 
 export class AppState {
@@ -12,6 +13,8 @@ export class AppState {
   timeStamp: string = "";
 
   isLoading: boolean = false;
+
+  isAuthenticated: boolean = false;
 
   public constructor(init?: Partial<AppState>) {
     Object.assign(this, init);
@@ -33,5 +36,9 @@ export class AppState {
 
   setIsLoading(isLoading: boolean): AppState {
     return new AppState({ ...this, isLoading });
+  }
+
+  login(isAuthenticated: boolean) {
+    return new AppState({ ...this, isAuthenticated });
   }
 }

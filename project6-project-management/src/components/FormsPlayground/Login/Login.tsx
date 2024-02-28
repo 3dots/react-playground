@@ -1,9 +1,6 @@
 import type { FormEvent } from "react";
 
-
-
 export function Login() {
-
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);

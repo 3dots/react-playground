@@ -7,7 +7,6 @@ import { LoadingOverlay } from "./LoadingOverlay/LoadingOverlay";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./util/routes";
 
-
 export function App() {
   const [errorBoundaryKey] = useState(0);
 

@@ -19,7 +19,11 @@ export function Modal(props: PropsWithChildren<IModalProps>) {
   }, [props.isOpen]);
 
   return createPortal(
-    <dialog className="modal PlaceWishesContainer" ref={dialog} onClose={props.onClose}>
+    <dialog
+      className="modal PlaceWishesContainer"
+      ref={dialog}
+      onClose={props.onClose}
+    >
       {props.isOpen ? props.children : null}
     </dialog>,
     document.getElementById("modal-root")!,
